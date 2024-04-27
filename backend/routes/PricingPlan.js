@@ -85,3 +85,5 @@ router.delete('/:id', authorize('admin'), async (req, res) => {
         res.status(500).json({ message: "An error occurred while deleting the pricing plan." });
     }
 });
+
+module.exports = router;

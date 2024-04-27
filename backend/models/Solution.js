@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const solutionSchema = new Schema({
     name: { type: String, required: true },
     description: String,
-    thumbnail: string,
+    thumbnail: String,
     modelUsed: String,
     algorithm: String,
     tags: String,

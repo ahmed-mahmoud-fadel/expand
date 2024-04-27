@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const authorize = require('../utils/authorize');
 const ContactUs = require('../models/ContactUs');
 
 // Publci APIs
