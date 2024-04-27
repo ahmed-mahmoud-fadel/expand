@@ -10,6 +10,10 @@ const {generateToken} = require('../utils/jwt');
 const authJwt = require('../utils/authJwt');
 const authorize = require('../utils/authorize');
 const enforceAccessControl = require('../utils/enforceAccessControl');
+const upload = require('../utils/multer');
+const s3 = require('../utils/aws-s3');
+
+
 
 router.use(authJwt());
 
@@ -156,7 +160,12 @@ router.post('/auth/reset-password', async (req, res) => {
 })
 
 // Change User Password
-router.patch('/:id/change-password', authorize('admin', 'user'), enforceAccessControl(), validatePassword, async (req, res) => {
+router.patch('/:id/change-password', authorize('admin', 'user'), enforceAccessControl(), async (req, res) => {
+    if (!validatePassword(req.body.newPassword)) {
+        return res.status(400).json({
+            message: 'Password does not meet complexity requirements. It must be at least 8 characters long and include both letters and numbers.'
+        });
+    }
     const { currentPassword, newPassword } = req.body;
     try {
         const user = await User.findById(req.params.id);
@@ -194,5 +203,51 @@ router.delete('/:id', authorize('admin'), enforceAccessControl(), async (req, re
         res.status(500).json({ success: false, error: err });
     });
 });
+
+
+// upload profile image
+router.post('/:Id/profile-image', upload.single('file'), async (req, res) => {
+    const file = req.file;
+    const userId = req.params.Id;
+
+    if (!file) {
+        return res.status(400).send('Please upload a file.');
+    }
+
+    const allowedTypes = /jpeg|jpg|png/;
+    const extension = allowedTypes.test(file.originalname.toLowerCase());
+    const mimeType = allowedTypes.test(file.mimetype);
+
+    if (!(extension && mimeType)) {
+        return res.status(400).send('Invalid file type. Only JPEG, JPG and PNG files are allowed.');
+    }
+
+    const s3Params = {
+        Bucket: process.env.AWS_S3_BUCKET_NAME,
+        Key: `profile-images/${userId}-${Date.now()}`,
+        Body: file.buffer,
+        ContentType: file.mimetype,
+        ACL: 'public-read' 
+    };
+
+    try {
+        const data = await s3.upload(s3Params).promise();
+        await User.findByIdAndUpdate(userId, { photo: data.Location });
+        res.json({ message: 'Profile image uploaded successfully!', photo: data.Location });
+    } catch (err) {
+        console.error('Error uploading image to S3:', err);
+        res.status(500).json({ message: 'Failed to upload profile image.' });
+    }
+});
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;
