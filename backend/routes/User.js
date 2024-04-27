@@ -126,6 +126,11 @@ router.post('/auth/register', async (req,res)=>{
     }
 })
 
+// Validate JWT Token
+router.post('/auth/validate-token', authorize('admin', 'user'), (req, res) => {
+    res.status(200).json({ message: 'Successfully logged In.' });
+});
+
 //api for logout
 router.post('/auth/logout', authorize('admin', 'user'), async (req, res) => {
     try {
