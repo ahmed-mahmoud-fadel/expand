@@ -13,8 +13,6 @@ const enforceAccessControl = require('../utils/enforceAccessControl');
 const upload = require('../utils/multer');
 const s3 = require('../utils/aws-s3');
 
-
-
 router.use(authJwt());
 
 
@@ -34,7 +32,7 @@ router.get('/', authorize('admin'), async (req, res) => {
             currentPage:  parseInt(page, 10),
         });
     } catch (error) {
-        console.error(error);
+        console.error("Error while retrieving users:", err);
         res.status(500).json({ message: 'An error occurred while fetching the users.' });
     }
 });
@@ -206,7 +204,7 @@ router.delete('/:id', authorize('admin'), enforceAccessControl(), async (req, re
 
 
 // upload profile image
-router.post('/:Id/profile-image', upload.single('file'), async (req, res) => {
+router.post('/:Id/profile-image', upload.single('file'), authorize('admin', 'user'), enforceAccessControl(), async (req, res) => {
     const file = req.file;
     const userId = req.params.Id;
 
@@ -239,15 +237,6 @@ router.post('/:Id/profile-image', upload.single('file'), async (req, res) => {
         res.status(500).json({ message: 'Failed to upload profile image.' });
     }
 });
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;

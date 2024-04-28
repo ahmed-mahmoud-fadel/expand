@@ -27,9 +27,19 @@ router.post('/', async (req, res) => {
 
 //Get All Contact Messages
 router.get('/messages', authorize('admin'), async (req, res) => {
+    const count = await ContactUs.countDocuments();
+    const { page = 1, limit = 6 } = req.query;
+
     try {
-        const messages = await ContactUs.find({});
-        res.json(messages);
+        const messages = await ContactUs.find()
+            .limit(limit * 1)
+            .skip((page - 1) * limit)
+            .exec();
+        res.status(200).json({
+            messages,
+            totalPages: Math.ceil(count / limit),
+            currentPage:  parseInt(page, 10),
+        });
     } catch (err) {
         console.error("Error while retrieving contact messages:", err);
         res.status(500).json({ message: "An error occurred while retrieving messages." });

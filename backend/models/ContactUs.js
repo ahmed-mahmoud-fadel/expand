@@ -6,4 +6,8 @@ const contactUsSchema = new Schema({
     email: String,
     message: String,
 }, { timestamps: true });
+
+contactUsSchema.virtual('id').get(function () {
+    return this._id.toHexString();
+});
 module.exports = mongoose.model('ContactUs', contactUsSchema);
