@@ -19,8 +19,7 @@ const userSchema = new Schema({
     companyName: { type: String, required: true},
     companyLocation: String,
     companyWebsite: String,
-    last_logged: { type: Date, default: Date.now }
-});
+}, { timestamps: true });
 userSchema.virtual('id').get(function () {
     return this._id.toHexString();
 });

@@ -28,7 +28,7 @@ router.post('/:id', authorize('admin','user'), enforceAccessControl(), async (re
         const newSubscription = new Subscription({
             user: userId,
             solution: solutionId,
-            pricingPlan: pricingPlanId,
+            pricingPlans: pricingPlanId,
         });
         const savedSubscription = await newSubscription.save();
         res.status(201).json(savedSubscription);
@@ -58,12 +58,15 @@ router.patch('/:id/cancel', authorize('admin', 'user'), enforceAccessControl(), 
 
 // Admin APIs
 
-// Get All Subscriptions for the Logged-in User
+// Get All Subscriptions 
 router.get('/admin',authorize('admin'), async (req, res) => {
     try {
         const count = await Subscription.countDocuments();
         const { page = 1, limit = 6 } = req.query;
         const subscriptions = await Subscription.find()
+        .populate({ path: 'user', select: 'name email' })
+        .populate({ path: 'solution', select: 'title description' })
+        .populate({ path: 'pricingPlans', select: 'title' })
         .limit(limit * 1)
         .skip((page - 1) * limit)
         .exec();

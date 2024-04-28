@@ -22,7 +22,7 @@ app.use(errorHandler);
 const userRoutes = require('./routes/User');
 const solutionRoutes = require('./routes/Solution');
 const blogRoutes = require('./routes/Blog');
-const pricingPlanRoutes = require('./routes/PricingPlan');
+const pricingPlansRoutes = require('./routes/PricingPlans');
 
 const contactUSRoutes = require('./routes/ContactUs');
 const invoiceRoutes = require('./routes/Invoice');
@@ -42,7 +42,7 @@ app.use(`${api}/subscription`, subscriptionRoutes);
 app.use(`${api}/user`, userRoutes);
 app.use(`${api}/userContactAccess`, userContactAccessRoutes);
 app.use(`${api}/blog`, blogRoutes);
-app.use(`${api}/pricingPlan`, pricingPlanRoutes);
+app.use(`${api}/pricingPlans`, pricingPlansRoutes);
 
 
 

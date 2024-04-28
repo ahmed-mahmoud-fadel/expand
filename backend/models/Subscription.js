@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const subscriptionSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   solution: { type: Schema.Types.ObjectId, ref: 'Solution', required: true },
-  pricingPlan: { type: Schema.Types.ObjectId, ref: 'PricingPlan', required: true },
+  pricingPlans: { type: Schema.Types.ObjectId, ref: 'pricingPlans', required: true },
   startDate: { type: Date },
   endDate: Date,
   autoRenew: { type: Boolean, default: false },

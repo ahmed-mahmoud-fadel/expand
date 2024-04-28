@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const PricingPlan = require('../models/PricingPlan');
+const PricingPlans = require('../models/PricingPlans');
 const authorize = require('../utils/authorize');
 
 // Public APIs
@@ -8,7 +8,7 @@ const authorize = require('../utils/authorize');
 //Get All Pricing Plans
 router.get('/', async (req, res) => {
     try {
-        const plans = await PricingPlan.find({});
+        const plans = await PricingPlans.find({});
 
         // Check if the pricing plans was found
         if (!plans) {
@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
 // Get a specific pricing plan by ID
 router.get('/:id', async (req, res) => {
     try {
-        const plan = await PricingPlan.findById(req.params.id);
+        const plan = await PricingPlans.findById(req.params.id);
 
         // Check if the pricing plan was found
         if (!plan) {
@@ -45,7 +45,7 @@ router.get('/:id', async (req, res) => {
 // Create a new pricing plan
 router.post('/', authorize('admin'), async (req, res) => {
     try {
-        const newPlan = new PricingPlan(req.body);
+        const newPlan = new PricingPlans(req.body);
         const savedPlan = await newPlan.save();
         res.status(201).json(savedPlan);
     } catch (err) {
@@ -57,7 +57,7 @@ router.post('/', authorize('admin'), async (req, res) => {
 // Update an existing pricing plan by ID
 router.put('/:id', authorize('admin'), async (req, res) => {
     try {
-        const updatedPlan = await PricingPlan.findByIdAndUpdate(
+        const updatedPlan = await PricingPlans.findByIdAndUpdate(
             req.params.id,
             req.body,
             { new: true }
@@ -75,7 +75,7 @@ router.put('/:id', authorize('admin'), async (req, res) => {
 // Delete a pricing plan by ID
 router.delete('/:id', authorize('admin'), async (req, res) => {
     try {
-        const deletedPlan = await PricingPlan.findByIdAndDelete(req.params.id);
+        const deletedPlan = await PricingPlans.findByIdAndDelete(req.params.id);
         if (!deletedPlan) {
             return res.status(404).json({ message: "Pricing plan not found." });
         }

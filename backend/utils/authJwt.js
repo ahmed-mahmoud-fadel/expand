@@ -30,6 +30,9 @@ function authJwt() {
             { url: `${api}/ContactUs`, methods: ['POST'] },
             // paths for blog 
             { url: /\/api\/v1\/blog\/active(.*)/, methods: ['GET'] },
+            // paths for pricing plan
+            { url:/\/api\/v1\/pricingPlans(.*)/, methods: ['GET'] },
+            { url:/\/api\/v1\/solution(.*)/, methods: ['GET'] }
         ]
     })
 }
