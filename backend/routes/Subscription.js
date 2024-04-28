@@ -61,7 +61,7 @@ router.patch('/:id/cancel', authorize('admin', 'user'), enforceAccessControl(), 
 // Get All Subscriptions for the Logged-in User
 router.get('/admin',authorize('admin'), async (req, res) => {
     try {
-        const count = await subscriptions.countDocuments();
+        const count = await Subscription.countDocuments();
         const { page = 1, limit = 6 } = req.query;
         const subscriptions = await Subscription.find()
         .limit(limit * 1)
