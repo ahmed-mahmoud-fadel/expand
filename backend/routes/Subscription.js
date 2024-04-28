@@ -9,7 +9,7 @@ const enforceAccessControl = require('../utils/enforceAccessControl');
 // User APIs
 
 // Get All Subscriptions for the Logged-in User
-router.get('/',authorize('user'), enforceAccessControl(), async (req, res) => {
+router.get('/user',authorize('user'), enforceAccessControl(), async (req, res) => {
     try {
         const subscriptions = await Subscription.find({ user: req.user._id });
         res.json(subscriptions);
@@ -20,26 +20,17 @@ router.get('/',authorize('user'), enforceAccessControl(), async (req, res) => {
 });
 
 // Create a Subscription for the Logged-in User
-router.post('/', async (req, res) => {
+router.post('/:id', authorize('admin','user'), enforceAccessControl(), async (req, res) => {
     try {
-        // Extract user and subscription details from the request
-        const userId = req.auth.id; // Assuming `req.user._id` contains the ID of the authenticated user
-        const { solutionId, pricingPlanId, autoRenew } = req.body;
+        const userId = req.params.id;
+        const { solutionId, pricingPlanId } = req.body;
 
-        // Optional: Additional validation can be performed here (e.g., check if the solution and pricing plan exist)
-
-        // Create the subscription
         const newSubscription = new Subscription({
             user: userId,
             solution: solutionId,
             pricingPlan: pricingPlanId,
-            autoRenew: autoRenew,
         });
-
-        // Save the subscription to the database
         const savedSubscription = await newSubscription.save();
-
-        // Respond with the newly created subscription
         res.status(201).json(savedSubscription);
     } catch (err) {
         console.error("Failed to create subscription:", err);
@@ -48,7 +39,7 @@ router.post('/', async (req, res) => {
 });
 
 // Cancel a Subscription
-router.patch('/:id/cancel', authorize('user'), enforceAccessControl(), async (req, res) => {
+router.patch('/:id/cancel', authorize('admin', 'user'), enforceAccessControl(), async (req, res) => {
     try {
         const subscription = await Subscription.findOneAndUpdate(
             { _id: req.params.id, user: req.user._id },
@@ -66,6 +57,26 @@ router.patch('/:id/cancel', authorize('user'), enforceAccessControl(), async (re
 });
 
 // Admin APIs
+
+// Get All Subscriptions for the Logged-in User
+router.get('/admin',authorize('admin'), async (req, res) => {
+    try {
+        const count = await subscriptions.countDocuments();
+        const { page = 1, limit = 6 } = req.query;
+        const subscriptions = await Subscription.find()
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .exec();
+        res.json({ 
+            subscriptions,
+            totalPages: Math.ceil(count / limit),
+            currentPage:  parseInt(page, 10)
+        });
+    } catch (err) {
+        console.error("Error while retrieving Subscriptions:", err);
+        res.status(500).json({ message: "An error occurred while retrieving subscriptions." });
+    }
+});
 
 // Update a Subscription
 router.put('/:id', authorize('admin'), async (req, res) => {

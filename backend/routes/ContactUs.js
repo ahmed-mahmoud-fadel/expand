@@ -27,10 +27,9 @@ router.post('/', async (req, res) => {
 
 //Get All Contact Messages
 router.get('/messages', authorize('admin'), async (req, res) => {
-    const count = await ContactUs.countDocuments();
-    const { page = 1, limit = 6 } = req.query;
-
     try {
+        const count = await ContactUs.countDocuments();
+        const { page = 1, limit = 6 } = req.query;
         const messages = await ContactUs.find()
             .limit(limit * 1)
             .skip((page - 1) * limit)
