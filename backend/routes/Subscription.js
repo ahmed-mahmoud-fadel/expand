@@ -67,7 +67,7 @@ router.get('/admin',authorize('admin'), async (req, res) => {
         const { page = 1, limit = 6 } = req.query;
         const subscriptions = await Subscription.find()
         .populate({ path: 'user', select: ' email companyName' })
-        .populate({ path: 'solution', select: 'title' })
+        .populate({ path: 'solution', select: 'name' })
         .populate({ path: 'pricingPlans', select: 'title' })
         .limit(limit * 1)
         .skip((page - 1) * limit)
