@@ -17,6 +17,17 @@ router.get('/active', async (req, res) => {
     }
 });
 
+// Get all  solutions admin
+router.get('/admin', authorize('admin'), async (req, res) => {
+    try {
+        const solutionList = await Solution.find();
+        res.status(200).json(solutionList);
+    } catch (err) {
+        console.error("Failed to retrieve solutions:", err);
+        res.status(500).json({  message: "An error occurred while retrieving solutions." });
+    }
+});
+
 // Find a specific active solution by its ID
 router.get('/:id', async (req, res) => {
     try {
@@ -36,16 +47,7 @@ router.get('/:id', async (req, res) => {
 
 // For Admin
 
-// Get all  solutions admin
-router.get('/admin', authorize('admin'), async (req, res) => {
-    try {
-        const solutionList = await Solution.find();
-        res.status(200).json(solutionList);
-    } catch (err) {
-        console.error("Failed to retrieve solutions:", err);
-        res.status(500).json({  message: "An error occurred while retrieving solutions." });
-    }
-});
+
 
 // Add a new solution to the database
 router.post('/', authorize('admin'), async (req, res) => {
