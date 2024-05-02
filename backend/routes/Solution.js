@@ -37,7 +37,7 @@ router.get('/:id', async (req, res) => {
 // For Admin
 
 // Get all  solutions admin
-router.get('/', authorize('admin'), async (req, res) => {
+router.get('/admin', authorize('admin'), async (req, res) => {
     try {
         const solutionList = await Solution.find();
         res.status(200).json(solutionList);
