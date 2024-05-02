@@ -7,7 +7,7 @@ const authorize = require('../utils/authorize');
 // For Public 
 
 // Get all active solutions
-router.get('/', async (req, res) => {
+router.get('/active', async (req, res) => {
     try {
         const solutionList = await Solution.find({active: true});
         res.status(200).json(solutionList);
@@ -35,6 +35,17 @@ router.get('/:id', async (req, res) => {
 
 
 // For Admin
+
+// Get all  solutions admin
+router.get('/', authorize('admin'), async (req, res) => {
+    try {
+        const solutionList = await Solution.find();
+        res.status(200).json(solutionList);
+    } catch (err) {
+        console.error("Failed to retrieve solutions:", err);
+        res.status(500).json({  message: "An error occurred while retrieving solutions." });
+    }
+});
 
 // Add a new solution to the database
 router.post('/', authorize('admin'), async (req, res) => {
