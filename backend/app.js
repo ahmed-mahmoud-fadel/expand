@@ -29,20 +29,22 @@ const invoiceRoutes = require('./routes/Invoice');
 const paymentRoutes = require('./routes/Payment');
 const subscriptionRoutes = require('./routes/Subscription');
 const userContactAccessRoutes = require('./routes/UserContactAccess');
-
+const analyticsRoutes = require('./routes/analytics');
 
 
 const api = process.env.API_URL;
 
-app.use(`${api}/contactUs`, contactUSRoutes);
+app.use(`${api}/user`, userRoutes);
+app.use(`${api}/solution`, solutionRoutes);
+app.use(`${api}/pricingPlans`, pricingPlansRoutes);
+app.use(`${api}/subscription`, subscriptionRoutes);
+app.use(`${api}/contact`, contactUSRoutes);
+app.use(`${api}/blog`, blogRoutes);
 app.use(`${api}/invoice`, invoiceRoutes);
 app.use(`${api}/payment`, paymentRoutes);
-app.use(`${api}/solution`, solutionRoutes);
-app.use(`${api}/subscription`, subscriptionRoutes);
-app.use(`${api}/user`, userRoutes);
 app.use(`${api}/userContactAccess`, userContactAccessRoutes);
-app.use(`${api}/blog`, blogRoutes);
-app.use(`${api}/pricingPlans`, pricingPlansRoutes);
+app.use(`${api}/analytics`, analyticsRoutes);
+
 
 
 

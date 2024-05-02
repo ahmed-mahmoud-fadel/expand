@@ -47,7 +47,7 @@ router.get('/active', async (req, res) => {
     }
 });
 
-// 222Get active specific blog post by ID
+// Get active specific blog post by ID
 router.get('/active/:id', async (req, res) => {
     try {
         const post = await BlogPost.findById({_id: req.params.id, acitve: true})
@@ -62,11 +62,10 @@ router.get('/active/:id', async (req, res) => {
     }
 });
 
-// 22Get a specific blog post by ID for admin
-router.get('/:id', async (req, res) => {
+// Get a Specific Blog Post by ID (Admin)
+router.get('/:id', authorize('admin'), async (req, res) => {
     try {
-        const post = await BlogPost.findById(req.params.id)
-            .select('title description thumbnail date link content');
+        const post = await BlogPost.findById(req.params.id);
         if (!post) {
             return res.status(404).json({ message: 'Blog post not found.' });
         }

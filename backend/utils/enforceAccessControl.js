@@ -6,7 +6,7 @@ function enforceAccessControl() {
 
         // Allow the resource owner or an admin to proceed.
         if (userId !== requestingUser && requestingUserRole !== 'admin') {
-            return res.status(403).json({ message: 'You do not have permissions.' });
+            return res.status(403).json({ message: 'Access denied. You do not have permission.' });
         }
 
         next(); // Access control passed, proceed to the next middleware or route handler.

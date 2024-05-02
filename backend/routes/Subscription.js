@@ -11,7 +11,9 @@ const enforceAccessControl = require('../utils/enforceAccessControl');
 // Get All Subscriptions for the Logged-in User
 router.get('/user',authorize('user'), enforceAccessControl(), async (req, res) => {
     try {
-        const subscriptions = await Subscription.find({ user: req.user._id });
+        const subscriptions = await Subscription.find({ user: req.user._id })
+        .populate({ path: 'solution', select: 'title description' })
+        .populate({ path: 'pricingPlans', select: 'title' })
         res.json(subscriptions);
     } catch (err) {
         console.error(err);

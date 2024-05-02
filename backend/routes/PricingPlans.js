@@ -38,7 +38,7 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ message: 'An error occurred while retrieving the pricing plan.' });
     }
 });
-
+    
 
 // Admin APIs
 

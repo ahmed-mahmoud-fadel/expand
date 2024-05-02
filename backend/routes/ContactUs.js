@@ -13,7 +13,6 @@ router.post('/', async (req, res) => {
             email: req.body.email,
             message: req.body.message,
         });
-
         newMessage = await newMessage.save();
         res.status(201).json({ message: "Your message has been successfully sent." });
     } catch (err) {
@@ -67,6 +66,6 @@ router.get('/:id', authorize('admin'), async(req,res)=>{
     if(!contactUs) {
         res.status(500).json({message: 'The contactus with the given ID was not found.'})
     } 
-    res.status(200).send(contactUs);
+    res.status(200).json(contactUs);
 })
 module.exports =router;

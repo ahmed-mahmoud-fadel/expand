@@ -6,16 +6,17 @@
  */
 
 function authorize(...roles) {
-    // roles param can be a single role string (e.g., 'admin') or an array of roles
+  try {
     return (req, res, next) => {
       if (req.auth && roles.length && !roles.includes(req.auth.role)) {
-        // user's role is not authorized
-        return res.status(401).json({ message: 'Unauthorized' });
+        return res.status(401).json({ message: 'Unauthorized. Token is invalid or expired.' });
       }
-  
-      // authentication and authorization successful
       next();
     };
+  } catch (err) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 }
 
 module.exports = authorize;

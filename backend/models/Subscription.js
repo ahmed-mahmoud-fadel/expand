@@ -18,5 +18,4 @@ subscriptionSchema.virtual('isSubscriptionActive').get(function () {
   return this.autoRenew || this.endDate > now;
 });
 
-
 module.exports = mongoose.model('Subscription', subscriptionSchema);
