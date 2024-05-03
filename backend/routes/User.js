@@ -99,9 +99,9 @@ router.delete('/:id', authorize('admin', 'user'), enforceAccessControl(), async 
 });
 
 // Upload Profile Image (Self of Admin)
-router.post('/:Id/profile-image', authorize('admin', 'user'), enforceAccessControl(), upload.single('file'), async (req, res) => {
+router.post('/:id/profile-image', authorize('admin', 'user'), enforceAccessControl(), upload.single('file'), async (req, res) => {
     const file = req.file;
-    const userId = req.params.Id;
+    const userId = req.params.id;
 
     if (!file) {
         return res.status(400).send('Please upload a file.');
