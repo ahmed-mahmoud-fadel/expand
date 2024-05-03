@@ -32,7 +32,10 @@ function authJwt() {
             { url: /\/api\/v1\/blog\/active(.*)/, methods: ['GET'] },
             // paths for pricing plan
             { url:/\/api\/v1\/pricingPlans(.*)/, methods: ['GET'] },
-            { url:/\/api\/v1\/solution(.*)/, methods: ['GET'] }
+            // paths for solution
+            { url:/\/api\/v1\/solution(.*)/, methods: ['GET'] },
+            // paths for products
+            { url:/\/api\/v1\/product(.*)/, methods: ['GET'] },
         ]
     })
 }
