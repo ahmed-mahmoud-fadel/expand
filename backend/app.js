@@ -30,6 +30,8 @@ const paymentRoutes = require('./routes/Payment');
 const subscriptionRoutes = require('./routes/Subscription');
 const userContactAccessRoutes = require('./routes/UserContactAccess');
 const analyticsRoutes = require('./routes/analytics');
+const productRoutes = require('./routes/Product');
+
 
 
 const api = process.env.API_URL;
@@ -44,6 +46,7 @@ app.use(`${api}/invoice`, invoiceRoutes);
 app.use(`${api}/payment`, paymentRoutes);
 app.use(`${api}/userContactAccess`, userContactAccessRoutes);
 app.use(`${api}/analytics`, analyticsRoutes);
+app.use(`${api}/product`, productRoutes);
 
 
 
