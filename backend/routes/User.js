@@ -66,8 +66,9 @@ router.put('/:id', authorize('admin', 'user'), enforceAccessControl(), async (re
                 city: req.body.city,
                 street: req.body.street,
                 zip: req.body.zip,
-                photo: req.body.photo,
-                company: req.body.company,
+                companyName: req.body.companyName,
+                companyLocation: req.body.companyLocation,
+                companyWebsite: req.body.companyWebsite
             },
             { new: true }
         );
@@ -98,7 +99,7 @@ router.delete('/:id', authorize('admin', 'user'), enforceAccessControl(), async 
 });
 
 // Upload Profile Image (Self of Admin)
-router.post('/:Id/profile-image', upload.single('file'), authorize('admin', 'user'), enforceAccessControl(), async (req, res) => {
+router.post('/:Id/profile-image', authorize('admin', 'user'), enforceAccessControl(), upload.single('file'), async (req, res) => {
     const file = req.file;
     const userId = req.params.Id;
 
