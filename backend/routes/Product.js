@@ -3,6 +3,9 @@ const router = express.Router();
 const Product = require('../models/Product');
 const authorize = require('../utils/authorize');
 
+const upload = require('../utils/multer');
+const s3 = require('../utils/aws-s3');
+
 // Public APIs
 
 // Get all active products
@@ -60,8 +63,6 @@ router.get('/:id', async (req, res) => {
 });
 
 // Admin APIs
-
-
 
 // Create a new product (Admin only)
 router.post('/', authorize('admin'), async (req, res) => {
