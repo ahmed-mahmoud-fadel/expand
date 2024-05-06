@@ -27,7 +27,7 @@ const ImageUpload = ({
         if  (imgSelector.current?.files) {
           data.set("file", imgSelector.current?.files[0])
 
-          const response = await uploadImage(`${endpoints.products}/${id}/product-image`, data, jwt)
+          const response = await uploadImage(`${endpoints.posts}/${id}/blog-image`, data, jwt)
 
           if (!response.success) {
             setMessage(response.message)
@@ -57,7 +57,7 @@ const ImageUpload = ({
     className="flex flex-col gap-2"
     onSubmit={formik.handleSubmit}
     >
-        <p className="text-sm">Profile photo</p>
+        <p className="text-sm">Blog thumbnail</p>
         {
           formik.values.photo &&
           <Image

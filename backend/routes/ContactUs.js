@@ -45,7 +45,7 @@ router.get('/messages', authorize('admin'), async (req, res) => {
 });
 
 // Delete a Contact Message
-router.delete('/messages/:id', authorize('admin'), async (req, res) => {
+router.delete('/:id', authorize('admin'), async (req, res) => {
     try {
         const deletedMessage = await ContactUs.findByIdAndDelete(req.params.id);
         if (!deletedMessage) {

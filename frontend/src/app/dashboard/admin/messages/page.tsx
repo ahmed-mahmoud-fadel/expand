@@ -1,3 +1,4 @@
+import DeleteButton from "@/components/DeleteButton"
 import Pagination from "@/components/Pagination"
 import { Button } from "@/components/ui/button"
 import endpoints from "@/global/endpoints"
@@ -41,7 +42,11 @@ const Messages = async ({
         </p>
       }
       {
-        !error && messages &&
+        !error && messages && messages.length <= 0 &&
+        "No messages found."
+      }
+      {
+        !error && messages && messages.length > 0 &&
         <>
         <div className="overflow-y-scroll h-3/4">
           {
@@ -62,6 +67,11 @@ const Messages = async ({
                       Read
                     </Button>
                   </Link>
+                  <DeleteButton
+                  id={message._id}
+                  item="messages"
+                  jwt={jwt?.value ?? ""}
+                  />
                 </div>
               </div>
             ))

@@ -28,7 +28,10 @@ const BlogForm = ({
         response = await editEntity(
           "posts",
           blog._id,
-          values,
+          {
+            ...values,
+            link: `/blog/${blog._id}`
+          },
           jwt,
         )
       } else {
