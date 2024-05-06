@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
             message: req.body.message,
         });
         newMessage = await newMessage.save();
-        res.status(201).json({ message: "Your message has been successfully sent." });
+        res.status(200).json({ message: "Your message has been successfully sent." });
     } catch (err) {
         console.error("Error while submitting contact message:", err);
         res.status(500).json({ message: "An error occurred while submitting your message." });
