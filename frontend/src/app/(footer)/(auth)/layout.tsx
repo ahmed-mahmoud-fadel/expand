@@ -11,7 +11,7 @@ const AuthLayout = ({
   return (
     <div className="gap-5 flex-1 flex flex-col w-full h-full">
       <div className="grid grid-cols-1 w-full h-full md:grid-cols-2">
-        <Image className="hidden md:block w-full h-[50rem] object-cover" src={loginBanner} alt="Authentication Banner" />
+        <Image className="hidden md:block w-full h-full object-cover" src={loginBanner} alt="Authentication Banner" />
         <div className="flex flex-col gap-24 py-6 justify-center">
           <header className="flex flex-col gap-7 items-center justify-center p-5">
             <Link href="/">

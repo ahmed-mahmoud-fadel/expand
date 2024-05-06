@@ -1,6 +1,6 @@
 interface PricingPlan {
-  id: number,
-  name: string,
+  _id: string,
+  title: string,
   description: string,
   pricing: number,
   sale: number,

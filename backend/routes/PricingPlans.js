@@ -11,9 +11,9 @@ router.get('/', async (req, res) => {
         const plans = await PricingPlans.find({});
 
         // Check if the pricing plans was found
-        if (!plans) {
-            return res.status(404).json({ message: 'Pricing plans not found.' });
-        }
+        // if (!plans) {
+        //     return res.status(404).json({ message: 'Pricing plans not found.' });
+        // }
 
         res.status(200).json(plans);
     } catch (err) {

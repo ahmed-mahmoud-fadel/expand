@@ -63,7 +63,7 @@ router.post('/', authorize('admin'), async (req, res) => {
         solution = await solution.save();
         if (!solution)
             return res.status(400).send('The solution cannot be created!');
-        res.status(500).json(solution);
+        res.status(200).json(solution);
     } catch (err) {
         console.error("Failed to creating solution:", err);
         res.status(500).json({ message: 'An error occurred while creating the solution.' });
@@ -95,9 +95,9 @@ router.put('/:id', authorize('admin'), async (req, res) => {
 });
 
 // Delete a specific solution from the database
-router.delete('/:id', authorize('admin'), (req, res) => {
+router.delete('/:id', authorize('admin'), async (req, res) => {
     try {
-        const deleteSolution = Solution.findByIdAndDelete(req.params.id);
+        const deleteSolution = await Solution.findByIdAndDelete(req.params.id);
         if (!deleteSolution) {
             return res.status(404).json({ message: "Solution not found!" });
         }

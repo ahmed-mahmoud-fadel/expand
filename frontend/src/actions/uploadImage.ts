@@ -1,10 +1,9 @@
 "use server"
 
-import endpoints from "@/global/endpoints"
 import fetchWithError from "@/global/fetchWithError"
 
-export default async function uploadImage(image: FormData, jwt: string, id: string) {
-  const [response, error] = await fetchWithError(`${endpoints.users}/${id}/profile-image`, {
+export default async function uploadImage(target: string, image: FormData, jwt: string) {
+  const [response, error] = await fetchWithError(target, {
     next: {
       revalidate: 0,
     },

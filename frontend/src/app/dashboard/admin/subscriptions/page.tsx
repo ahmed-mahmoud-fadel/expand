@@ -1,6 +1,6 @@
+import CancelSubscriptionButton from "@/components/CancelSubscriptionButton"
 import Pagination from "@/components/Pagination"
-import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import endpoints from "@/global/endpoints"
 import fetchWithError from "@/global/fetchWithError"
@@ -30,8 +30,6 @@ const Subscriptions = async ({
 
   if (!error) {
     subscriptions = data.subscriptions
-    console.log(subscriptions);
-    
     last = data.totalPages
   }
 
@@ -74,6 +72,9 @@ const Subscriptions = async ({
               <TableHead>
                 Auto renew
               </TableHead>
+              <TableHead>
+                Actions
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -81,10 +82,10 @@ const Subscriptions = async ({
               subscriptions.map((subscription: Subscription, n: number) => (
                 <TableRow>
                   <TableCell>{(page - 1) * 10 + n + 1}</TableCell>
-                  <TableCell>{subscription.user.companyName}</TableCell>
-                  <TableCell>{subscription.user.email}</TableCell>
-                  <TableCell>{subscription.solution.name}</TableCell>
-                  <TableCell>{subscription.pricingPlans.title}</TableCell>
+                  <TableCell>{subscription.user?.companyName}</TableCell>
+                  <TableCell>{subscription.user?.email}</TableCell>
+                  <TableCell>{subscription.solution?.name}</TableCell>
+                  <TableCell>{subscription.pricingPlans?.title}</TableCell>
                   <TableCell>{new Date(subscription.createdAt).toDateString()}</TableCell>
                   <TableCell>{new Date(subscription.endDate).toDateString()}</TableCell>
                   <TableCell>{subscription.status}</TableCell>
@@ -93,6 +94,19 @@ const Subscriptions = async ({
                       subscription.autoRenew ?
                       <FaCheck className="text-primary" /> :
                       <FaX className="text-red-600"/>
+                    }
+                  </TableCell>
+                  <TableCell>
+                    {
+                      subscription.status !== 'canceled' &&
+                      <CancelSubscriptionButton
+                      id={subscription._id}
+                      jwt={jwt?.value ?? ""}
+                      />
+                    }
+                    {
+                      subscription.status === 'canceled' &&
+                      "No available actions."
                     }
                   </TableCell>
                 </TableRow>

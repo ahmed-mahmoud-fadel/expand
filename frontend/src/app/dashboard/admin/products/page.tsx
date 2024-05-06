@@ -1,14 +1,16 @@
 import ErrorMessage from "@/components/ErrorMessage";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import endpoints from "@/global/endpoints";
-import fetchWithError from "@/global/fetchWithError";
 import Product from "@/types/Product";
 import Link from "next/link";
 import Image from "next/image";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import { Switch } from "@/components/ui/switch";
 import Pagination from "@/components/Pagination";
-import DeleteButton from "./DeleteButton/DeleteButton";
+import DeleteButton from "../../../../components/DeleteButton";
+import fetchWithError from "@/global/fetchWithError";
+import endpoints from "@/global/endpoints";
+import { cookies } from "next/headers";
+import { Button } from "@/components/ui/button";
 
 const ProductsPage = async ({
   searchParams,
@@ -17,57 +19,30 @@ const ProductsPage = async ({
     page?: string
   },
 }) => {
+  const jwt = cookies().get("jwt")
+  const page = searchParams.page ?? 1
+
   const header = [
     "ID", "Thumbnail", "Name", "Category",
-    "Description", "Vendor", "", "", "Active",
+    "Description", "Vendor", "", "", "Status",
   ]
 
-  const [products, error]: [Product[], any] = [
-    [
-      {
-        vendor: "Zara",
-        thumbnail: "https://specscart.co.uk/media/catalog/product/a/9/a97008f-1-1.webp",
-        category: "Glasses",
-        description: "Lorem Ipsum",
-        _id: '1',
-        isActive: true,
-        name: "Classic Glasses"
-      },
-      {
-        vendor: "Addidas",
-        thumbnail: "https://contents.mediadecathlon.com/p2606919/k$a531927e5c71c12f4d3edac227199f78/jogflow-5001-men-s-running-shoes-white-blue-red.jpg?format=auto&quality=40&f=452x452",
-        category: "Shoes",
-        description: "Lorem Ipsum",
-        _id: '2',
-        isActive: false,
-        name: "Running Shoes"
-      }, {
-        vendor: "Casio",
-        category: "Watches",
-        description: "Lorem Ipsum",
-        thumbnail: "https://m.media-amazon.com/images/I/61+jdqBIN9L._AC_SL1200_.jpg",
-        _id: '3',
-        isActive: true,
-        name: "G-Shock Golden Military Watch for Men"
-      }
-    ],
-    null
-  ]
-  
-  // await fetchWithError(
-  //   `${endpoints.products}?_page=${searchParams?.page ?? 1}_limit=10`,
-  //   {
-  //     next: {
-  //       revalidate: 0
-  //     }
-  //   }
-  // ) as [Product[], any]
+  const [data, error] = await fetchWithError(`${endpoints.products}/admin?page=${page}&limit=10`, {
+    headers: {
+      "Authorization": `Bearer ${jwt?.value}`
+    }
+  })
+
+  let products, last
+
+  if (!error) {
+    products = data.products
+    last = data.totalPages
+  }
 
   return (
     <main className="flex flex-col gap-4">
       <h1>Product listing</h1>
-
-      {/* Include toolbar here */}
 
       <ErrorMessage message={error?.message} />
 
@@ -86,7 +61,7 @@ const ProductsPage = async ({
             </TableHeader>
             <TableBody>
               {
-                products.map((product, n: number) => (
+                products.map((product: Product, n: number) => (
                   <TableRow>
                     <TableCell>
                       {(n + 1)}
@@ -100,7 +75,7 @@ const ProductsPage = async ({
                       />
                     </TableCell>
                     <TableCell>
-                      {product.name}
+                      {product.title}
                     </TableCell>
                     <TableCell>
                       {product.category}
@@ -124,22 +99,30 @@ const ProductsPage = async ({
                       <DeleteButton
                       id={product._id}
                       item="products"
+                      jwt={jwt?.value ?? ''}
                       />
                     </TableCell>
                     <TableCell>
-                      <Switch
-                        checked={product.isActive}
-                      />
+                      {product.status}
                     </TableCell>
                   </TableRow>
                 ))
               }
             </TableBody>
           </Table>
-          <div className="flex justify-end">
+          <div className="flex justify-between">
+            <Link
+            href="/dashboard/admin/products/new"
+            className="w-max"
+            >
+              <Button className="flex gap-1 items-center text-white">
+                <FaPlus />
+                Add product
+              </Button>
+            </Link>
             <Pagination
             handle="/dashboard/admin/products"
-            last={10}
+            last={last}
             searchParams={searchParams}
             />
           </div>
