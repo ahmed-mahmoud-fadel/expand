@@ -51,7 +51,7 @@ const Solutions = async () => {
                 <TableBody>
                   {
                     solutions.map((solution: Solution, n: number) => (
-                      <TableRow>
+                      <TableRow key={solution._id}>
                         <TableCell>{n + 1}</TableCell>
                         <TableCell>{solution.name}</TableCell>
                         <TableCell>{solution.description}</TableCell>

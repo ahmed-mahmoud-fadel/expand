@@ -87,7 +87,7 @@ const Products = async ({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
             {
               products.map((product: Product) => (
-                <Card className="flex flex-col">
+                <Card className="flex flex-col" key={product._id}>
                   <CardHeader>
                     <Image
                     alt=""

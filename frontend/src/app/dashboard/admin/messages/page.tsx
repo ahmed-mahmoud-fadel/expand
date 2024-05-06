@@ -51,7 +51,7 @@ const Messages = async ({
         <div className="overflow-y-scroll h-3/4">
           {
             messages.slice(0, 10).map((message: Message) => (
-              <div className="flex items-center justify-between border-b p-4">
+              <div className="flex items-center justify-between border-b p-4" key={message._id}>
                 <div className="flex flex-col gap-2">
                   <p className="text-xl font-semibold">
                     {message.name}

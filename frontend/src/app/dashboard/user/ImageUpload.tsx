@@ -30,7 +30,7 @@ const ImageUpload = ({
         if  (imgSelector.current?.files) {
           data.set("file", imgSelector.current?.files[0])
 
-          const response = await uploadImage(data, jwt, id)
+          const response = await uploadImage(`${endpoints.users}/${id}/profile-image`, data, jwt)
 
           if (!response.success) {
             setError(response.message)

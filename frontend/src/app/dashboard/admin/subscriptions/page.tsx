@@ -80,7 +80,7 @@ const Subscriptions = async ({
           <TableBody>
             {
               subscriptions.map((subscription: Subscription, n: number) => (
-                <TableRow>
+                <TableRow key={subscription._id}>
                   <TableCell>{(page - 1) * 10 + n + 1}</TableCell>
                   <TableCell>{subscription.user?.companyName}</TableCell>
                   <TableCell>{subscription.user?.email}</TableCell>

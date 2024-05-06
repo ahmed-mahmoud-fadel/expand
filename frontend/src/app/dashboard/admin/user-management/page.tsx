@@ -66,7 +66,7 @@ const UserManagement = async ({
           <TableBody>
             {
               users.map((user: User, n: number) => (
-                <TableRow>
+                <TableRow key={user._id}>
                   <TableCell>{(page - 1) * 10 + n + 1}</TableCell>
                   <TableCell>
                     <Avatar>

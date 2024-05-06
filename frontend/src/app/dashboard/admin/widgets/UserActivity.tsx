@@ -27,7 +27,7 @@ const UserActivity = ({
             <TableBody>
               {
                 users.map(user => (
-                  <TableRow>
+                  <TableRow key={user._id}>
                     <TableCell>
                       {user.firstName} {user.lastName}
                     </TableCell>

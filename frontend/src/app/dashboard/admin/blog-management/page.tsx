@@ -70,7 +70,7 @@ const BlogManagement = async ({
                 <TableBody>
                   {
                     posts.map((post: BlogPost, n: number) => (
-                      <TableRow>
+                      <TableRow key={post._id}>
                         <TableCell>{(n * page) + 1}</TableCell>
                         <TableCell>{post.title.substring(0, 30)}</TableCell>
                         <TableCell>{post.description.substring(0, 100)}</TableCell>

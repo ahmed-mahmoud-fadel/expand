@@ -64,7 +64,7 @@ const PricingPlans = async () => {
                 <TableBody>
                   {
                     plans.map((plan: PricingPlan, n:number) => (
-                      <TableRow>
+                      <TableRow key={plan._id}>
                         <TableCell>{n + 1}</TableCell>
                         <TableCell>{plan.title}</TableCell>
                         <TableCell>{plan.description}</TableCell>

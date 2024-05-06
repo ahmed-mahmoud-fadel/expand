@@ -54,7 +54,7 @@ const ProductsPage = async ({
               <TableRow>
                 {
                   header.map(str => (
-                    <TableHead>{str}</TableHead>
+                    <TableHead key={str}>{str}</TableHead>
                   ))
                 }
               </TableRow>
@@ -62,7 +62,7 @@ const ProductsPage = async ({
             <TableBody>
               {
                 products.map((product: Product, n: number) => (
-                  <TableRow>
+                  <TableRow key={product._id}>
                     <TableCell>
                       {(n + 1)}
                     </TableCell>

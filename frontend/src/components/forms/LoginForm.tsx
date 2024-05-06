@@ -75,7 +75,7 @@ const LoginForm = () => {
         }
         <Button type="submit" className="text-white w-full">Log in</Button>
         <div className="py-5 flex gap-1">
-          Don't have an account?
+          Don&apos;t have an account?
           <Link href="/signup" className="text-primary">Create an account now</Link>
         </div>
       </Card>
