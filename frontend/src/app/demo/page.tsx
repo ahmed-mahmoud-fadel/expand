@@ -91,7 +91,7 @@ const DemoSelectionPage = () => {
               </p>
             </div>
           </div>
-          <ContactForm />
+          {/* <ContactForm /> */}
           <Footer />
           </>
         }

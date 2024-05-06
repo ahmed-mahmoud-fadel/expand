@@ -1,13 +1,16 @@
 "use client"
 
-import { useFormik } from "formik"
+import {  useFormik } from "formik"
 import * as yup from 'yup'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import addEntity from "@/actions/addEntity";
+import { useState } from "react";
 
 const ContactForm = () => {
+  const [responseText, setResponseText] = useState<string | null>(null)
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -21,14 +24,24 @@ const ContactForm = () => {
       email: yup.string().email("You must enter a valid email address.").required("Email is required."),
       message: yup.string().required("A message is required."),
     }),
-    onSubmit: (values) => {
-      
+    onSubmit: async (values) => {
+      const response = await addEntity(
+        "messages",
+        {
+          name: `${values.firstName} ${values.lastName}`,
+          email: values.email,
+          message: values.message,
+        },
+      )
+
+      if (response.success) setResponseText("Success! We'll get back to you.")
+      else setResponseText(response.message)
     }
   })
 
   return (
-    <form id="contact" onSubmit={formik.handleSubmit} className="flex justify-center my-16">
-      <Card className="w-full lg:w-1/2">
+    <form id="contact" onSubmit={formik.handleSubmit} className="flex justify-center my-16 w-full">
+      <Card className="w-full">
         <CardHeader>
           <CardTitle>Contact Us</CardTitle>
         </CardHeader>
@@ -81,7 +94,10 @@ const ContactForm = () => {
             <p className="text-red-500 text-sm">{formik.errors.message}</p>
           }
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex flex-col gap-5">
+          {
+            responseText && <p className="font-bold">{responseText}</p>
+          }
           <Button
             onClick={formik.submitForm}
             className="w-full text-white"

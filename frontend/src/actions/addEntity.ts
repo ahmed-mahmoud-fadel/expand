@@ -6,7 +6,7 @@ import fetchWithError from "@/global/fetchWithError"
 export default async function addEntity(
   item: string,
   values: any,
-  jwt: string,
+  jwt?: string,
   path: string = "",
 ) {
   const [data, error] = await fetchWithError(
@@ -18,7 +18,7 @@ export default async function addEntity(
       },
       headers: {
         "Authorization": `Bearer ${jwt}`,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(values)
     }

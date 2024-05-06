@@ -13,12 +13,9 @@ const Header = () => {
         <Brand />
       </Link>
       <Nav />
-      <Link href="#contact" className="block md:hidden">
-        <Button className="text-white">
-          <div className="hidden md:block">Contact Us</div>
-          <div className="block md:hidden">
-            <FaRegEnvelope />
-          </div>
+      <Link href="/signup" className="block lg:hidden">
+        <Button className="text-white font-bold">
+          <div>Get started</div>
         </Button>
       </Link>
       <div className="flex gap-2">

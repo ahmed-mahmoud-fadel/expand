@@ -8,6 +8,7 @@ import ImageUpload from "./ImageUpload";
 import editEntity from "@/actions/editEntity";
 import addEntity from "@/actions/addEntity";
 import LabelledInput from "@/components/LabelledInput";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const BlogForm = ({
   blog,
@@ -68,6 +69,22 @@ const BlogForm = ({
         label="Blog title"
         placeholder="Blog title"
         />
+        <div className="flex gap-2 items-center">
+          <Checkbox
+          id="active"
+          name="active"
+          checked={formik.values.active}
+          onCheckedChange={() => {
+            formik.setValues((values) => {
+              return {
+                ...values,
+                active: !values.active,
+              }
+            })
+          }}
+          />
+          <label htmlFor="active">Active</label>
+        </div>
         <LabelledInput
         formik={formik}
         id="description"

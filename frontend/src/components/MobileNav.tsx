@@ -16,29 +16,11 @@ const MobileNav = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-      className="block md:hidden"
+      className="block lg:hidden"
       >
         <IoMenu />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="absolute top-0 right-0">
-        <DropdownMenuLabel>Models</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href="/models/glasses">
-            Glasses
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Link href="/models/watches">
-            Watches
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Link href="/models/shoes">
-            Shoes
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Link href="/demo">
             Demo
@@ -54,6 +36,18 @@ const MobileNav = () => {
         <DropdownMenuItem>
           <Link href="/blog">
             Blog
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <Link href="/contact">
+            Contact Us
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <Link href="/login">
+            Log in
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>

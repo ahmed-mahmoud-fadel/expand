@@ -41,12 +41,12 @@ const Products = async ({
     <main className="flex flex-col gap-10">
       <section className="py-10 border-b flex flex-col lg:flex-row gap-10 lg:gap-24 items-center">
         <div className="flex flex-col gap-6 text-center items-center lg:text-left lg:items-start">
-          <div className="text-xl md:text-4xl font-bold flex items-center gap-2">
+          <div className="text-xl lg:text-3xl font-bold flex items-center gap-2">
             <p>See it</p>
             <FaArrowRight className="text-primary" />
-            <p className="text-2xl md:text-5xl">Try it</p>
+            <p className="text-2xl lg:text-4xl">Try it</p>
             <FaArrowRight className="text-primary" />
-            <p className="text-3xl md:text-6xl">Love it!</p>
+            <p className="text-3xl lg:text-5xl">Love it!</p>
           </div>
           <p className="text-lg font-semibold">Revolutionize your look with VTO: Try before you buy, hassle-free, and always on point!</p>
         </div>

@@ -9,8 +9,8 @@ const Viewer = () => {
         <div className="flex flex-col justify-evenly p-5">
           <h3 className="mb-4">3D Viewer</h3>
           <p>Showcase your iconic watches, footwear or glasses in an engaging way with our new 3D Viewer. Let customers explore the details from every angle and get a better understanding of the details and texture of the product as if they had it in their hands.</p>
-          <Link href="#contact" className="my-4">
-            <Button className="text-white">Contact Us</Button>
+          <Link href="/signup" className="my-4">
+            <Button className="text-white font-bold">Get Started</Button>
           </Link>
         </div>
         <ModelViewer />

@@ -14,25 +14,9 @@ import Link from "next/link";
 
 const Nav = () => {
   return (
-    <div className="md:flex gap-5 hidden">
+    <div className="lg:flex gap-5 hidden">
       <NavigationMenu>
         <NavigationMenuList className="text-[#8a38a6] dark:text-[#c95ced]">
-        
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Models</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <Link href="/models/glasses" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>Glasses</NavigationMenuLink>
-              </Link>
-              <Link href="/models/watches" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>Watches</NavigationMenuLink>
-              </Link>
-              <Link href="/models/shoes" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>Shoes</NavigationMenuLink>
-              </Link>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        
 
           <NavigationMenuItem>
             <Link href="/demo" legacyBehavior passHref>
@@ -70,6 +54,16 @@ const Nav = () => {
                 className={navigationMenuTriggerStyle()}
               >
                 Blog
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <Link href="/contact" legacyBehavior passHref>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+              >
+                Contact Us
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
