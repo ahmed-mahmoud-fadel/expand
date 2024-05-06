@@ -9,7 +9,7 @@ const endpoints = {
   subscriptions: `${handle}/subscription`,
   analytics: `${handle}/analytics`,
   posts: `${handle}/blog`,
-  plans: `${handle}/pricingPlan`,
+  plans: `${handle}/pricingPlans`,
   messages: `${handle}/contact`,
   products: `${handle}/product`,
 }

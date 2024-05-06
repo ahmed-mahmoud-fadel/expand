@@ -41,15 +41,15 @@ router.post('/:id', authorize('admin','user'), enforceAccessControl(), async (re
 });
 
 // Cancel a Subscription
-router.patch('/:id/cancel', authorize('admin', 'user'), enforceAccessControl(), async (req, res) => {
+router.put('/:id/cancel', authorize('admin', 'user'), enforceAccessControl(), async (req, res) => {
     try {
         const subscription = await Subscription.findOneAndUpdate(
-            { _id: req.params.id, user: req.user._id },
+            { _id: req.params.id },
             { status: 'canceled' },
             { new: true }
         );
         if (!subscription) {
-            return res.status(404).json({ message: "Subscription not found or not owned by user." });
+            return res.status(404).json({ message: "Subscription not found." });
         }
         res.json({ message: "Subscription canceled successfully.", subscription });
     } catch (err) {

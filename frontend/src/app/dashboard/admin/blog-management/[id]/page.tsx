@@ -1,16 +1,16 @@
 import fetchWithError from "@/global/fetchWithError";
-import SolutionForm from "../Form";
+import BlogForm from "../Form";
 import endpoints from "@/global/endpoints";
 import { cookies, headers } from "next/headers";
 import ErrorMessage from "@/components/ErrorMessage";
 
-const EditSolutionPage = async ({
+const EditProductPage = async ({
   params
 }: {
   params: any
 }) => {
   const jwt = cookies().get('jwt')
-  const [solution, error] = await fetchWithError(`${endpoints.solutions}/${params.id}`, {
+  const [blog, error] = await fetchWithError(`${endpoints.posts}/${params.id}`, {
     next: {
       revalidate: 0,
     },
@@ -18,19 +18,20 @@ const EditSolutionPage = async ({
       "Authorization": `Bearer ${jwt?.value}`
     }
   })
+
   return (
     <main className="flex flex-col gap-4 h-full">
-      <p className="text-lg font-bold">Edit plan</p>
+      <p className="text-lg font-bold">Edit blog post</p>
       {error && <ErrorMessage message={error.message} />}
       {
-        !error && solution &&
-        <SolutionForm
+        !error && blog &&
+        <BlogForm
         jwt={jwt?.value ?? ''}
-        solution={solution}
+        blog={blog}
         />
       }
     </main>
   );
 }
  
-export default EditSolutionPage;
+export default EditProductPage;

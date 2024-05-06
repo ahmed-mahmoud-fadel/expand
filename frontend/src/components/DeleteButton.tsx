@@ -1,37 +1,26 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogHeader } from "@/components/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { DialogContent, DialogDescription } from "@radix-ui/react-dialog";
-import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
-import deleteItem from "./deleteItem";
+import deleteItem from "@/actions/deleteItem";
 import { useRouter } from "next/navigation";
 
 const DeleteButton = ({
   item,
   id,
+  jwt,
 }: {
   item: string,
   id: string,
+  jwt: string,
 }) => {
-  const [dialogText, setDialogText] = useState<string | null>(null)
   const router = useRouter()
 
   return (
     <>
-      <Dialog open={dialogText !== null}>
-        <DialogContent>
-          <DialogHeader>An error occurred!</DialogHeader>
-          <DialogDescription>
-            {dialogText}
-          </DialogDescription>
-        </DialogContent>
-      </Dialog>
-
       <Popover>
-        <PopoverTrigger>
+        <PopoverTrigger asChild>
           <Button
             variant="destructive"
             className="flex items-center gap-2"
@@ -44,11 +33,15 @@ const DeleteButton = ({
           Are you sure?
           <Button
             variant="destructive"
-            onClick={() => deleteItem(
-              item, id,
-              () => router.refresh(),
-              (message) => setDialogText(message)
-            )}
+            onClick={async () => {
+              const repsonse = await deleteItem(
+                item, id, jwt,
+                "",
+              )
+              
+              if (repsonse.success) router.refresh()
+              else window.alert(repsonse.message)
+            }}
           >
             Delete
           </Button>

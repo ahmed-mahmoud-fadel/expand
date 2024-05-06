@@ -5,8 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import endpoints from "@/global/endpoints";
-import fetchWithError from "@/global/fetchWithError";
-import { useRouter } from "next/navigation";
 import uploadImage from "@/actions/uploadImage";
 
 const ImageUpload = ({
@@ -18,8 +16,7 @@ const ImageUpload = ({
   id: string,
   jwt: string,
 }) => {
-  const [error, setError] = useState<string | null>(null)
-  const router = useRouter()
+  const [message, setMessage] = useState<string | null>(null)
   const formik = useFormik({
     initialValues: {
       photo: image,
@@ -30,12 +27,12 @@ const ImageUpload = ({
         if  (imgSelector.current?.files) {
           data.set("file", imgSelector.current?.files[0])
 
-          const response = await uploadImage(`${endpoints.users}/${id}/profile-image`, data, jwt)
+          const response = await uploadImage(`${endpoints.products}/${id}/product-image`, data, jwt)
 
           if (!response.success) {
-            setError(response.message)
+            setMessage(response.message)
           } else {
-            router.back()
+            setMessage("Succesfully uploaded")
           }
         }
       }
@@ -81,8 +78,8 @@ const ImageUpload = ({
           accept="image/*"
         />
         {
-          error &&
-          <p className="text-red font-bold">{error}</p>
+          message &&
+          <p className="font-bold">{message}</p>
         }
         <Button
         className="text-white w-max"

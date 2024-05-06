@@ -1,3 +1,4 @@
+import DeleteButton from "@/components/DeleteButton"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import endpoints from "@/global/endpoints"
@@ -57,19 +58,20 @@ const PricingPlans = async () => {
                       Sale
                     </TableHead>
                     <TableHead></TableHead>
+                    <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {
-                    plans.map((plan: PricingPlan) => (
+                    plans.map((plan: PricingPlan, n:number) => (
                       <TableRow>
-                        <TableCell>{plan.id}</TableCell>
-                        <TableCell>{plan.name}</TableCell>
+                        <TableCell>{n + 1}</TableCell>
+                        <TableCell>{plan.title}</TableCell>
                         <TableCell>{plan.description}</TableCell>
                         <TableCell>{plan.pricing}$</TableCell>
                         <TableCell>{(plan.sale * 100).toFixed()}%</TableCell>
                         <TableCell>
-                          <Link href={`/dashboard/admin/pricing-plans/${plan.id}`}>
+                          <Link href={`/dashboard/admin/pricing-plans/${plan._id}`}>
                             <Button
                               variant="ghost"
                               className="text-primary"
@@ -77,6 +79,13 @@ const PricingPlans = async () => {
                               Edit
                             </Button>
                           </Link>
+                        </TableCell>
+                        <TableCell>
+                          <DeleteButton
+                          id={plan._id}
+                          item="plans"
+                          jwt={jwt?.value ?? ""}
+                          />
                         </TableCell>
                       </TableRow>
                     ))

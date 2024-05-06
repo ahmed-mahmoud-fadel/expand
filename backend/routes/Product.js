@@ -62,6 +62,19 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+router.get('/admin/:id', async (req, res) => {
+    try {
+        const product = await Product.findOne({ _id: req.params.id });
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        res.status(200).json(product);
+    } catch (error) {
+        console.error("Error while retrieving the product:", error);
+        res.status(500).json({ message: "An error occurred while fetching the product." });
+    }
+});
+
 // Admin APIs
 
 // Create a new product (Admin only)

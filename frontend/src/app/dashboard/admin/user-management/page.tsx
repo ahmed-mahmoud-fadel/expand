@@ -60,9 +60,6 @@ const UserManagement = async ({
               <TableHead>
                 Status
               </TableHead>
-              <TableHead>
-                Date
-              </TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
@@ -90,9 +87,6 @@ const UserManagement = async ({
                   </TableCell>
                   <TableCell>
                     {user.status}
-                  </TableCell>
-                  <TableCell>
-                    {new Date(user.joinDate).toDateString()}
                   </TableCell>
                   <TableCell>
                     <Link href={`/dashboard/admin/profile/${user._id}`} className="text-primary">Profile</Link>
