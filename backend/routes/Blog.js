@@ -162,5 +162,4 @@ router.post('/:id/blog-image', authorize('admin'), upload.single('file'), async 
         res.status(500).json({ message: 'Failed to upload profile image.' });
     }
 });
-
 module.exports = router;
