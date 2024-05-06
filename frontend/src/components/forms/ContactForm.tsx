@@ -99,8 +99,8 @@ const ContactForm = () => {
             responseText && <p className="font-bold">{responseText}</p>
           }
           <Button
-            onClick={formik.submitForm}
             className="w-full text-white"
+            type="submit"
           >
             Send
           </Button>
