@@ -10,7 +10,7 @@ const BackButton = () => {
   return (
     <Button
     className="flex items-center gap-2"
-    onClick={() => router.back()}
+    onClick={() => history.back()}
     variant="ghost"
     type="button"
     >

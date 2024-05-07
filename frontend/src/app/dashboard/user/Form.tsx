@@ -24,7 +24,7 @@ const UserForm = ({
     initialValues: {
       firstName: user.firstName ?? "",
       lastName: user.lastName ?? "",
-      email: user.email ?? "",
+      // email: user.email ?? "",
       phone: user.phone ?? "",
       companyName: user.companyName ?? "",
     },
@@ -82,8 +82,9 @@ const UserForm = ({
           id="email"
           name="email"
           placeholder="Email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
+          value={user.email}
+          disabled
+          // onChange={formik.handleChange}
         />
       </div>
       <div className="flex flex-col w-80">

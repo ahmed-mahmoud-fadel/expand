@@ -113,7 +113,7 @@ router.post('/:id/profile-image', authorize('admin', 'user'), enforceAccessContr
     const mimeType = allowedTypes.test(file.mimetype);
 
     if (!(extension && mimeType)) {
-        return res.status(400).send('Invalid file type. Only JPEG, JPG and PNG files are allowed.');
+        return res.status(400).json({message: 'Invalid file type. Only JPEG, JPG and PNG files are allowed.'});
     }
 
     const s3Params = {

@@ -4,14 +4,15 @@ import cancelSubscription from "@/actions/cancelSubscription";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { FaTrash } from "react-icons/fa";
 
 const CancelSubscriptionButton = ({
-  id,
+  userId,
   jwt,
+  subscriptionId,
 }: {
-  id: string,
+  userId: string,
   jwt: string,
+  subscriptionId: string,
 }) => {
   const router = useRouter()
   return (
@@ -30,7 +31,7 @@ const CancelSubscriptionButton = ({
           className="text-white"
           variant="destructive"
           onClick={async () => {
-            const response = await cancelSubscription(id, jwt)
+            const response = await cancelSubscription(userId, jwt, subscriptionId)
 
             if (response.success) {
               router.refresh()

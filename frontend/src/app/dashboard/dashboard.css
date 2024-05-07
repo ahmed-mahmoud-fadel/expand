@@ -3,3 +3,9 @@ h1 {
   text-lg
   font-bold
 }
+
+h2 {
+  @apply
+  font-semibold
+  mb-4
+}

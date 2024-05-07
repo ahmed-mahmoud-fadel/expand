@@ -3,10 +3,16 @@
 import endpoints from "@/global/endpoints"
 import fetchWithError from "@/global/fetchWithError"
 
-export default async function cancelSubscription(userId: string, jwt: string, subscriptionId: string) {
+export default async function subscribe(
+  userId: string,
+  solutionId: string,
+  pricingPlanId: string,
+  jwt: string,
+) {
   const [data, error] = await fetchWithError(
-    `${endpoints.subscriptions}/${userId}/cancel`,
+    `${endpoints.subscriptions}/${userId}`,
     {
+      method: "post",
       next: {
         revalidate: 0,
       },
@@ -14,8 +20,7 @@ export default async function cancelSubscription(userId: string, jwt: string, su
         "Authorization": `Bearer ${jwt}`,
         "Content-Type": "application/json",
       },
-      method: "put",
-      body: JSON.stringify({ subscriptionId })
+      body: JSON.stringify({solutionId, pricingPlanId})
     }
   )
 

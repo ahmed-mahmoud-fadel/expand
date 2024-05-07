@@ -8,7 +8,7 @@ const solutionSchema = new Schema({
     modelUsed: String,
     algorithm: String,
     tags: String,
-    active: { type: Boolean, default: false }
+    active: { type: Boolean, default: true }
   }, { timestamps: true });
 
 module.exports = mongoose.model('Solution', solutionSchema);

@@ -44,19 +44,14 @@ const AdminDashboardLayout = async ({
       icon: <FaUser />,
     },
     {
-      text: "Subscription",
-      href: '/dashboard/user/subscription',
+      text: "Subscriptions",
+      href: '/dashboard/user/subscriptions',
       icon: <FaMoneyBill />,
     },
     {
       text: "Support",
-      href: '/dashboard/user/support',
+      href: '/contact',
       icon: <FaQuestion />,
-    },
-    {
-      text: "API Keys",
-      href: '/dashboard/user/keys',
-      icon: <FaWrench />,
     },
   ]
 

@@ -39,7 +39,7 @@ const MessagePage = async ({
             Name: {message.name}
           </p>
           <p className="text-lg">
-            Recieved on: {new Date(message.created_at).toDateString()}
+            Recieved on: {new Date(message.createdAt).toDateString()}
           </p>
           <div>
             <p className="font-semibold">Email</p>

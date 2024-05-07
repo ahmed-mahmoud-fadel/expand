@@ -9,10 +9,10 @@ const enforceAccessControl = require('../utils/enforceAccessControl');
 // User APIs
 
 // Get All Subscriptions for the Logged-in User
-router.get('/user',authorize('user'), enforceAccessControl(), async (req, res) => {
+router.get('/user/:id',authorize('user'), enforceAccessControl(), async (req, res) => {
     try {
-        const subscriptions = await Subscription.find({ user: req.user._id })
-        .populate({ path: 'solution', select: 'title description' })
+        const subscriptions = await Subscription.find({ user: req.params.id })
+        .populate({ path: 'solution', select: 'name description' })
         .populate({ path: 'pricingPlans', select: 'title' })
         res.json(subscriptions);
     } catch (err) {
@@ -44,7 +44,7 @@ router.post('/:id', authorize('admin','user'), enforceAccessControl(), async (re
 router.put('/:id/cancel', authorize('admin', 'user'), enforceAccessControl(), async (req, res) => {
     try {
         const subscription = await Subscription.findOneAndUpdate(
-            { _id: req.params.id },
+            { _id: req.body.subscriptionId },
             { status: 'canceled' },
             { new: true }
         );

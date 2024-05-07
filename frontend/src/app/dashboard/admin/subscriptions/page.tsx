@@ -15,6 +15,7 @@ const Subscriptions = async ({
   searchParams: any
 }) => {
   const jwt = cookies().get('jwt')
+  const id = cookies().get('id')
 
   const page = searchParams?.page ?? 1
   const [data, error] = await fetchWithError(`${endpoints.subscriptions}/admin?page=${page}&limit=10`, {
@@ -104,7 +105,8 @@ const Subscriptions = async ({
                     {
                       subscription.status !== 'canceled' &&
                       <CancelSubscriptionButton
-                      id={subscription._id}
+                      userId={id?.value ?? ""}
+                      subscriptionId={subscription._id}
                       jwt={jwt?.value ?? ""}
                       />
                     }
