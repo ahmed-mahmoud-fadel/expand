@@ -9,6 +9,7 @@ import dashboardRouting from "../routing";
 import endpoints from "@/global/endpoints";
 import { cookies } from "next/headers";
 import UserDropdown from "@/components/UserDropdown";
+import Link from "next/link";
 
 const AdminDashboardLayout = async ({
   children
@@ -64,7 +65,9 @@ const AdminDashboardLayout = async ({
       <DashboardSidebar links={links} />
       <div className="flex flex-col w-full h-full">
         <header className="flex justify-between items-center p-2 border-b">
-          <Brand />
+          <Link href="/" className="w-max">
+            <Brand />
+          </Link>
           <Input placeholder="Search" className="w-96" />
           <div className="flex gap-4">
             <ThemeButton />

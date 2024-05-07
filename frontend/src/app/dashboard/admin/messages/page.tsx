@@ -57,7 +57,7 @@ const Messages = async ({
                     {message.name}
                   </p>
                   <p className="text-sm">{message.email}</p>
-                  <p className="text-sm">Recieved at: {new Date(message.created_at).toDateString()}</p>
+                  <p className="text-sm">Recieved at: {new Date(message.createdAt).toDateString()}</p>
                 </div>
                 <div className="flex gap-3">
                   <Link href={`/dashboard/admin/messages/${message._id}`}>

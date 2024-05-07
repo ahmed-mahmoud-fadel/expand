@@ -3,7 +3,7 @@ interface Message {
   name: string,
   email: string,
   message: string,
-  created_at: string,
+  createdAt: string,
 }
 
 export default Message
