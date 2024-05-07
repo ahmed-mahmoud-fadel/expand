@@ -62,6 +62,7 @@ router.put('/:id', authorize('admin', 'user'), enforceAccessControl(), async (re
                 lastName: req.body.lastName,
                 phone:  req.body.phone,
                 gender: req.body.gender,
+                status: req.body.status,
                 country: req.body.country,
                 city: req.body.city,
                 street: req.body.street,
