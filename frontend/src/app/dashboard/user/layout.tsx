@@ -65,9 +65,9 @@ const AdminDashboardLayout = async ({
       <DashboardSidebar links={links} />
       <div className="flex flex-col w-full h-full">
         <header className="flex justify-between items-center p-2 border-b">
-          <Link href="/" className="w-max">
+          <a href="/" className="w-max">
             <Brand />
-          </Link>
+          </a>
           <Input placeholder="Search" className="w-96" />
           <div className="flex gap-4">
             <ThemeButton />

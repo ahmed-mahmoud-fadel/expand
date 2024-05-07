@@ -35,7 +35,7 @@ const ImageUpload = ({
           if (!response.success) {
             setError(response.message)
           } else {
-            router.back()
+            location.assign('/dashboard/admin/user-management')
           }
         }
       }
@@ -66,7 +66,7 @@ const ImageUpload = ({
           <Image
             src=""
             alt=""
-            className="rounded-full w-44 h-44"
+            className="rounded-full w-44"
             width={150}
             height={150}
             ref={profileImage}

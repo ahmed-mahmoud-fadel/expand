@@ -11,12 +11,18 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { IoMenu } from "react-icons/io5";
 import Link from "next/link";
+import LogoutButton from "./LogoutButton";
+import { Button } from "./ui/button";
 
-const MobileNav = () => {
+const MobileNav = ({
+  loggedIn
+}: {
+  loggedIn?: boolean
+}) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-      className="block lg:hidden"
+        className="block lg:hidden"
       >
         <IoMenu />
       </DropdownMenuTrigger>
@@ -34,6 +40,12 @@ const MobileNav = () => {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
+          <Link href="/products">
+            Products
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
           <Link href="/blog">
             Blog
           </Link>
@@ -45,14 +57,40 @@ const MobileNav = () => {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href="/login">
-            Log in
-          </Link>
-        </DropdownMenuItem>
+        {
+          loggedIn &&
+          <>
+            <DropdownMenuItem>
+              <Link href="/dashboard">
+                Dashboard
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <LogoutButton />
+            </DropdownMenuItem>
+          </>
+        }
+        {
+          !loggedIn &&
+          <>
+            <DropdownMenuItem>
+              <Link href="/login">
+                Log in
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <Link href="/signup">
+                Get Started
+              </Link>
+            </DropdownMenuItem>
+          </>
+        }
+
       </DropdownMenuContent>
     </DropdownMenu>
   );
 }
- 
+
 export default MobileNav;

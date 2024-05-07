@@ -11,6 +11,8 @@ import {
 } from "./ui/navigation-menu";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import logout from "@/actions/logout";
+import LogoutButton from "./LogoutButton";
 
 const Nav = () => {
   return (
@@ -70,13 +72,6 @@ const Nav = () => {
 
         </NavigationMenuList>
       </NavigationMenu>
-
-      <Link href="/login">
-        <Button variant="secondary">Log in</Button>
-      </Link>
-      <Link href="/signup">
-        <Button className="text-white font-bold">Get Started</Button>
-      </Link>
     </div>
   );
 }

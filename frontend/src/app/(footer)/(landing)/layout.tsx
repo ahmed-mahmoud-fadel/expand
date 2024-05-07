@@ -1,11 +1,12 @@
-import ContactForm from "@/components/forms/ContactForm";
 import Header from "@/components/Header";
-import Footer from '@/components/Footer'
+import { cookies } from "next/headers";
 
 const LandingLayout = ({ children }: { children: React.ReactNode }) => {
+  const jwt = cookies().get('jwt')
+
   return (
     <>
-    <Header />
+    <Header loggedIn={jwt ? true : false} />
     <div className='mx-12 md:mx-52 mb-10'>
       {children}
       {/* <ContactForm /> */}

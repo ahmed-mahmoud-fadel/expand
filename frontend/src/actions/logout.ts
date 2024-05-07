@@ -8,6 +8,9 @@ export default async function logout() {
 
   const jwt = cookieStore.get("jwt")
 
+  console.log(jwt);
+  
+
   const response = await fetch(`${endpoints.logout}`, {
     next: {
       revalidate: 0

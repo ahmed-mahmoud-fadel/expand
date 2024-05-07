@@ -6,7 +6,7 @@ interface User {
   email: string,
   companyName: string,
   occupation: string,
-  status: "inactive" | "active",
+  status: "Pending" | "Active",
   joinDate: Date,
   phone: string,
   gender: "male" | "female",

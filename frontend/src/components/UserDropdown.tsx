@@ -34,10 +34,12 @@ const UserDropdown = ({
         onClick={async () => {
           const data = await logout()
           if (data.valid) {
-            setCookie('jwt', 'none', { expires: 0, path: '/' })
-            setCookie('id', 'none', { expires: 0, path: '/' })
+            setCookie('jwt', 'none', { expires: 1, path: '/' })
+            setCookie('id', 'none', { expires: 1, path: '/' })
             router.push('/')
           } else {
+            setCookie('jwt', 'none', { expires: 1, path: '/' })
+            setCookie('id', 'none', { expires: 1, path: '/' })
             window.alert(`Logout failed. message: ${data.message}`)
           }
         }}

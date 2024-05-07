@@ -3,9 +3,6 @@
 import endpoints from "@/global/endpoints"
 
 export default async function editProfile(user: any, jwt: string, id:string) {
-  console.log(user);
-  
-
   const response = await fetch(`${endpoints.users}/${id}`, {
     next: {
       revalidate: 0,
@@ -20,6 +17,7 @@ export default async function editProfile(user: any, jwt: string, id:string) {
       lastName: user.lastName,
       company: user.companyName,
       phone: user.phone,
+      status: user.status,
     }),
   })
 

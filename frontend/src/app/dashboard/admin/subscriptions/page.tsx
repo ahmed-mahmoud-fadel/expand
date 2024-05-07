@@ -43,7 +43,11 @@ const Subscriptions = async ({
         </div>
       }
       {
-        !error && subscriptions &&
+        !error && subscriptions && subscriptions.length <= 0 &&
+        "No subscriptions."
+      }
+      {
+        !error && subscriptions && subscriptions.length > 0 &&
         <>
         <div className="h-3/4 overflow-y-scroll">
         <Table>
