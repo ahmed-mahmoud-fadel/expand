@@ -5,11 +5,7 @@ import { cookies } from "next/headers"
 
 export default async function logout() {
   const cookieStore = cookies()
-
   const jwt = cookieStore.get("jwt")
-
-  console.log(jwt);
-  
 
   const response = await fetch(`${endpoints.logout}`, {
     next: {

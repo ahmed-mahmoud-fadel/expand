@@ -79,10 +79,10 @@ const DemoSelectionPage = () => {
                 <div className="absolute flex flex-col items-center gap-3">
                   <Image
                   src={QRCode}
-                  className="w-32 h-32"
+                  className="w-32"
                   alt="QR Code: A link to demo page."
                   />
-                  <p className="text-white bg-black w-full text-center rounded text-2xl font-bold">SCAN ME</p>
+                  {/* <p className="text-white bg-black w-full text-center rounded text-2xl font-bold">SCAN ME</p> */}
                 </div>
               </div>
               <p className="text-xl w-96 text-center">

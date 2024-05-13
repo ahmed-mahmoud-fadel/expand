@@ -7,14 +7,25 @@ import { FaChevronUp, FaChevronDown, FaCamera, FaArrowLeft } from "react-icons/f
 import icon from '@/global/img/icon.png'
 
 type Product = {
-  id: string | number,
   thumbnail: string,
+  modelName: string,
+  solution: "glasses" | "watches",
 }
 
-const DemoDisplay = () => {
+const DemoDisplay = ({
+  solution,
+  model,
+}: {
+  solution: string,
+  model: string,
+}) => {
   return (
-    <div className="w-full h-full">
-      <video className="w-full" />
+    <div className="w-full h-full flex items-center justify-center">
+      <embed
+      className="w-[400px] h-full"
+      src={`https://expand-vto.pages.dev/?solution=${solution}&model=${model}&width=400px`}
+      // allow="camera"
+      />
     </div>
   )
 }
@@ -51,14 +62,14 @@ const ProductSelector = ({
           {
             products.map(product => (
               <Image
-              key={product.id}
+              key={product.thumbnail}
               alt=""
               src={product.thumbnail}
               width={100}
               height={100}
               className="w-24 h-24 object-cover rounded-full"
               onClick={() => {
-                selectionCallback(product.id)
+                selectionCallback(product.modelName!)
                 setOpen(false)
               }}
               />
@@ -70,10 +81,44 @@ const ProductSelector = ({
   )
 }
 
-const DemoPage = () => {
+const models: Product[] = [
+  {
+    modelName: 'glasses 1.glb',
+    solution: "glasses",
+    thumbnail: "/glasses/1.png",
+  },
+  {
+    modelName: 'glasses 2.glb',
+    solution: "glasses",
+    thumbnail: "/glasses/2.png",
+  },
+  {
+    modelName: 'watch 1.glb',
+    solution: "watches",
+    thumbnail: "/watches/1.png",
+  },
+  {
+    modelName: 'watch 2.glb',
+    solution: "watches",
+    thumbnail: "/watches/2.png",
+  },
+]
+
+const DemoPage = ({
+  params
+}: {
+  params: {
+    solution: string
+  }
+}) => {
+  const [model, setModel] = useState(models[0].modelName)
+
   return (
     <main className="absolute top-0 right-0 w-full h-screen">
-      <DemoDisplay />
+      <DemoDisplay
+      model={model!}
+      solution={params.solution}
+      />
       <div className="absolute top-0 left-0 h-full w-full">
         <div className="flex justify-between items-center p-6">
           <Link
@@ -98,29 +143,9 @@ const DemoPage = () => {
             <FaCamera />
           </button>
           <ProductSelector
-          products={[
-            {
-              id: 0,
-              thumbnail: "/img/camera.jpg"
-            },
-            {
-              id: 1,
-              thumbnail: "/img/glasses.jpg"
-            },
-            {
-              id: 2,
-              thumbnail: "/img/mug.png"
-            },
-            {
-              id: 3,
-              thumbnail: "/img/watch.jpg"
-            },
-          ]}
+          products={models}
           selectionCallback={(id) => {
-            /*
-              Insert code here.
-              This code will run after a model selection has been made.
-            */
+            setModel(id as string)
           }}
           />
         </div>
