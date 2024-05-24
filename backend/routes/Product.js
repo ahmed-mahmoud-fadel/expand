@@ -75,6 +75,30 @@ router.get('/admin/:id', async (req, res) => {
     }
 });
 
+
+router.get('/model/:id', async (req, res) => {
+    try {
+      const product = await Product.findById(req.params.id);
+      if (!product) {
+        return res.status(404).send('Product not found');
+      }
+  
+      const response = await fetch(product.model);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch model: ${response.statusText}`);
+      }
+      const modelData = await response.arrayBuffer(); 
+      const base64Data = Buffer.from(modelData).toString('base64');
+  
+      res.setHeader('Content-Type', 'model/glb');
+      res.send(base64Data); 
+  
+    } catch (error) {
+      res.status(500).send('Error fetching model: ' + error.message);
+    }
+  });
+  
+
 // Admin APIs
 
 // Create a new product (Admin only)
