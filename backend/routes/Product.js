@@ -87,12 +87,11 @@ router.get('/model/:id', async (req, res) => {
       if (!response.ok) {
         throw new Error(`Failed to fetch model: ${response.statusText}`);
       }
-      const modelData = await response.arrayBuffer(); 
-      const base64Data = Buffer.from(modelData).toString('base64');
   
-      res.setHeader('Content-Type', 'model/glb');
-      res.send(base64Data); 
-  
+      res.setHeader('Content-Type', 'model/gltf-binary');
+      res.setHeader("Accept-Ranges", "bytes")
+      res.setHeader("Content-Length", response.headers.get("Content-Length"))
+      res.send(Buffer.from(await response.arrayBuffer()));
     } catch (error) {
       res.status(500).send('Error fetching model: ' + error.message);
     }

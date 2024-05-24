@@ -14,7 +14,7 @@ const GlassesSolution = ({
   path: string,
 }) => {
   const model = useLoader(GLTFLoader, path)
-  const baseModel = useLoader(GLTFLoader, '/models/head.glb')
+  const baseModel = useLoader(GLTFLoader, '/head.glb')
   const [prediction, setPrediction] = useState<FaceLandmarkerResult | null>(null)
   const { landmarker, isLoading, error, loadModel } = useLandmarker<FaceLandmarker>({
     initializer: fs => (

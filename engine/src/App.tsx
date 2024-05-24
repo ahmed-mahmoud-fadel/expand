@@ -1,35 +1,41 @@
-import WatchesRoute from "./routes/WatchesRoute";
-import GlassesRoute from './routes/GlassesRoute';
 import { useSearchParams } from "react-router-dom";
-import ShoesRoute from "./routes/ShoesRoute";
+import GlassesSolution from "./solutions/GlassesSolution";
+import ShoesSolution from "./solutions/ShoesSolution";
+import WatchesSolution from "./solutions/WatchesSolution";
+
+const endpoint = import.meta.env.VITE_API_HANDLE
 
 const solutions = [
   {
     name: "glasses",
-    route: GlassesRoute,
+    solution: GlassesSolution,
   },
   {
     name: "watches",
-    route: WatchesRoute,
+    solution: WatchesSolution,
   },
   {
     name: "shoes",
-    route: ShoesRoute,
+    solution: ShoesSolution,
   },
 ]
 
 const App = () => {
   const [searchParams] = useSearchParams()
 
-  const solution = searchParams.get('solution') 
-
+  const solution = searchParams.get('solution')
+  const product = searchParams.get('product')
+  
   if (!solution || !solutions.find(v => v.name === solution))
     return <p>Please provide a valid soltuion.</p>
 
-  const Route = solutions.find(v => v.name === solution)?.route!
+  if (!product)
+    return <p>Please provide a valid product ID.</p>
+  
+  const Solution = solutions.find(v => v.name === solution)?.solution!
 
   return (
-    <Route />
+    <Solution path={endpoint + `/product/model/${product}`}/>
   );
 }
  
