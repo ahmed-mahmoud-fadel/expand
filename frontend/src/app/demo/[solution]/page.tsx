@@ -21,10 +21,10 @@ const DemoDisplay = ({
 }) => {
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <embed
+      <iframe
       className="w-[400px] h-full"
-      src={`https://expand-vto.pages.dev/?solution=${solution}&model=${model}&width=400px`}
-      // allow="camera"
+      src={`https://expand-vto.pages.dev/?solution=${solution}&model=${model}&width=25em`}
+      allow="camera"
       />
     </div>
   )
