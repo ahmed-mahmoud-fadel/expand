@@ -19,7 +19,7 @@ const WatchesSolution = ({
     initializer: fs => (
       HandLandmarker.createFromOptions(fs, {
         baseOptions: {
-          modelAssetPath: '/hand_landmarker.task',
+          modelAssetPath: import.meta.env.BASE_URL + 'hand_landmarker.task',
           delegate: "GPU",
         },
         runningMode: "VIDEO",
@@ -28,7 +28,7 @@ const WatchesSolution = ({
         numHands: 2,
       })
     ),
-    wasmPath: '/wasm',
+    wasmPath: import.meta.env.BASE_URL + 'wasm',
   })
   const isReady = useMemo(() => (
     !isLoading && landmarker && !error

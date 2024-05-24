@@ -3,8 +3,6 @@ import GlassesSolution from "./solutions/GlassesSolution";
 import ShoesSolution from "./solutions/ShoesSolution";
 import WatchesSolution from "./solutions/WatchesSolution";
 
-const endpoint = import.meta.env.VITE_API_HANDLE
-
 const solutions = [
   {
     name: "glasses",
@@ -35,7 +33,7 @@ const App = () => {
   const Solution = solutions.find(v => v.name === solution)?.solution!
 
   return (
-    <Solution path={endpoint + `/product/model/${product}`}/>
+    <Solution path={import.meta.env.BASE_URL + `model/${product}`}/>
   );
 }
  

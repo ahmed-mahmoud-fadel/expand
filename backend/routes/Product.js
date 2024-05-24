@@ -74,28 +74,6 @@ router.get('/admin/:id', async (req, res) => {
         res.status(500).json({ message: "An error occurred while fetching the product." });
     }
 });
-
-
-router.get('/model/:id', async (req, res) => {
-    try {
-      const product = await Product.findById(req.params.id);
-      if (!product) {
-        return res.status(404).send('Product not found');
-      }
-  
-      const response = await fetch(product.model);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch model: ${response.statusText}`);
-      }
-  
-      res.setHeader('Content-Type', 'model/gltf-binary');
-      res.setHeader("Accept-Ranges", "bytes")
-      res.setHeader("Content-Length", response.headers.get("Content-Length"))
-      res.send(Buffer.from(await response.arrayBuffer()));
-    } catch (error) {
-      res.status(500).send('Error fetching model: ' + error.message);
-    }
-  });
   
 
 // Admin APIs

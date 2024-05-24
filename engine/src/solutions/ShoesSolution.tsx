@@ -59,7 +59,7 @@ const ShoesSolution = ({
     initializer: fs => (
       PoseLandmarker.createFromOptions(fs, {
         baseOptions: {
-          modelAssetPath: '/pose_landmarker_full.task',
+          modelAssetPath: import.meta.env.BASE_URL + 'pose_landmarker_full.task',
           delegate: "GPU",
         },
         runningMode: "VIDEO",
@@ -68,7 +68,7 @@ const ShoesSolution = ({
         numPoses: 1,
       })
     ),
-    wasmPath: '/wasm',
+    wasmPath: import.meta.env.BASE_URL + 'wasm',
   })
   const isReady = useMemo(() => (
     !isLoading && landmarker && !error

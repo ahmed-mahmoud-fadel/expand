@@ -92,7 +92,7 @@ const ARScene = ({
             <Environment
             background={false}
             files="warehouse.hdr"
-            path="/"
+            path={import.meta.env.BASE_URL}
             environmentRotation={new Euler(0, Math.PI / 2, 0)}
             environmentIntensity={0.5}
             />

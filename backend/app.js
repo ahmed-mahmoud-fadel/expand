@@ -17,8 +17,6 @@ app.use(morgan('tiny'));
 app.use(cors());
 app.use(errorHandler);
 
-
-
 //Routes
 const userRoutes = require('./routes/User');
 const solutionRoutes = require('./routes/Solution');
@@ -32,6 +30,8 @@ const subscriptionRoutes = require('./routes/Subscription');
 const userContactAccessRoutes = require('./routes/UserContactAccess');
 const analyticsRoutes = require('./routes/analytics');
 const productRoutes = require('./routes/Product');
+
+const engineRoutes = require('./routes/Engine')
 
 
 
@@ -48,6 +48,7 @@ app.use(`${api}/payment`, paymentRoutes);
 app.use(`${api}/userContactAccess`, userContactAccessRoutes);
 app.use(`${api}/analytics`, analyticsRoutes);
 app.use(`${api}/product`, productRoutes);
+app.use(`${api}/engine`, engineRoutes)
 
 
 

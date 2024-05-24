@@ -36,6 +36,7 @@ function authJwt() {
             { url:/\/api\/v1\/solution(.*)/, methods: ['GET'] },
             // paths for products
             { url:/\/api\/v1\/product(.*)/, methods: ['GET'] },
+            { url:/\/api\/v1\/engine(.*)/, methods: ["GET"] },
         ]
     })
 }

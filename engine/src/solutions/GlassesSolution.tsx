@@ -14,13 +14,13 @@ const GlassesSolution = ({
   path: string,
 }) => {
   const model = useLoader(GLTFLoader, path)
-  const baseModel = useLoader(GLTFLoader, '/head.glb')
+  const baseModel = useLoader(GLTFLoader, import.meta.env.BASE_URL + 'head.glb')
   const [prediction, setPrediction] = useState<FaceLandmarkerResult | null>(null)
   const { landmarker, isLoading, error, loadModel } = useLandmarker<FaceLandmarker>({
     initializer: fs => (
       FaceLandmarker.createFromOptions(fs, {
         baseOptions: {
-          modelAssetPath: "/face_landmarker.task",
+          modelAssetPath: import.meta.env.BASE_URL + "face_landmarker.task",
           delegate: "GPU",
         },
         runningMode: "VIDEO",
@@ -29,7 +29,7 @@ const GlassesSolution = ({
         numFaces: 1,
       })
     ),
-    wasmPath: "/wasm",
+    wasmPath: import.meta.env.BASE_URL + "wasm",
   })
   const isReady = useMemo(() => (
     !isLoading && landmarker && !error
