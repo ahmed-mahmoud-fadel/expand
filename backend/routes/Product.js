@@ -152,4 +152,41 @@ router.post('/:id/product-image', authorize('admin'), upload.single('file'), asy
     }
 });
 
+// Upload 3d model of product
+router.post('/:id/product-model', authorize('admin'), upload.single('file'), async (req, res) => {
+    const file = req.file;
+    const productID = req.params.id;
+
+    if (!file) {
+        return res.status(400).send('Please upload a file.');
+    }
+
+    const allowedTypes = /\.glb$/i;
+    const allowedMimeType = /^model\/gltf-binary$/i;
+    const extension = allowedTypes.test(file.originalname.toLowerCase());
+    const mimeType = allowedMimeType.test(file.mimetype);
+
+    if (!(extension && mimeType)) {
+        return res.status(400).send('Invalid file type. Only GLB files are allowed.');
+    }
+
+    const s3Params = {
+        Bucket: process.env.AWS_S3_BUCKET_NAME,
+        Key: `products-models/${productID}-${Date.now()}.glb`,
+        Body: file.buffer,
+        ContentType: file.mimetype,
+        ACL: 'public-read' 
+    };
+
+    try {
+        const data = await s3.upload(s3Params).promise();
+        await Product.findByIdAndUpdate(productID, { model: data.Location });
+        res.status(200).json({ message: '3D Model uploaded successfully!', model: data.Location });
+    } catch (err) {
+        console.error('Error uploading Model to S3:', err);
+        res.status(500).json({ message: 'Failed to upload Model.' });
+    }
+});
+
+
 module.exports = router;

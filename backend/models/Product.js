@@ -5,6 +5,7 @@ const productSchema = new Schema({
     title: { type: String, required: true },
     description: String,
     thumbnail: String,
+    model: String,
     status:  { type: String, enum: ['active', 'pending'], default: 'pending' },
     category: String,
     vendor: String,
