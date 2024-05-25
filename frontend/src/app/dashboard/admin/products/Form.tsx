@@ -10,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Product from "@/types/Product";
 import { useFormik } from "formik";
 import ImageUpload from "./ImageUpload";
+import ModelUpload from "./ModelUpload";
 
 const ProductForm = ({
   product,
@@ -28,7 +29,7 @@ const ProductForm = ({
       link: product?.link ?? "",
     },
     onSubmit: async (values) => {
-      let response
+      let response: any
       if (product) {
         response = await editEntity(
           "products",
@@ -44,7 +45,7 @@ const ProductForm = ({
         )
       }
 
-      if (response.success) location.assign("/dashboard/admin/products")
+      if (response.success) location.assign("/dashboard/admin/products" + (response.entity ? `/${response.entity._id}`: ""))
       else window.alert(response.message)
     }
   })
@@ -52,12 +53,19 @@ const ProductForm = ({
   return (
     <div className="flex flex-col h-full">
       {
-        product && 
+        product &&
+        <div className="flex gap-24 items-center mb-10">
         <ImageUpload
         id={product._id}
         jwt={jwt}
         image={product.thumbnail}
         />
+        <ModelUpload
+        id={product._id}
+        jwt={jwt}
+        model={product.model}
+        />
+        </div>
       }
     <form
       className="flex flex-col h-full"

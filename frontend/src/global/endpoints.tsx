@@ -12,6 +12,7 @@ const endpoints = {
   plans: `${handle}/pricingPlans`,
   messages: `${handle}/contact`,
   products: `${handle}/product`,
+  engine: `${handle}/engine`,
 }
 
 export default endpoints

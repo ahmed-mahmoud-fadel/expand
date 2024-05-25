@@ -5,25 +5,20 @@ import Link from "next/link";
 import { useState } from "react"
 import { FaChevronUp, FaChevronDown, FaCamera, FaArrowLeft } from "react-icons/fa";
 import icon from '@/global/img/icon.png'
-
-type Product = {
-  thumbnail: string,
-  modelName: string,
-  solution: "glasses" | "watches",
-}
+import Product from "@/types/Product";
 
 const DemoDisplay = ({
   solution,
-  model,
+  product,
 }: {
   solution: string,
-  model: string,
+  product: string,
 }) => {
   return (
     <div className="w-full h-full flex items-center justify-center">
       <iframe
       className="w-[400px] h-full"
-      src={`https://expand-vto.pages.dev/?solution=${solution}&model=${model}&width=25em`}
+      src={`https://expand-vto.pages.dev/?solution=${solution}&product=${product}&width=25em`}
       allow="camera"
       />
     </div>
@@ -69,7 +64,7 @@ const ProductSelector = ({
               height={100}
               className="w-24 h-24 object-cover rounded-full"
               onClick={() => {
-                selectionCallback(product.modelName!)
+                selectionCallback(product._id)
                 setOpen(false)
               }}
               />
@@ -81,29 +76,6 @@ const ProductSelector = ({
   )
 }
 
-const models: Product[] = [
-  {
-    modelName: 'glasses 1.glb',
-    solution: "glasses",
-    thumbnail: "/glasses/1.png",
-  },
-  {
-    modelName: 'glasses 2.glb',
-    solution: "glasses",
-    thumbnail: "/glasses/2.png",
-  },
-  {
-    modelName: 'watch 1.glb',
-    solution: "watches",
-    thumbnail: "/watches/1.png",
-  },
-  {
-    modelName: 'watch 2.glb',
-    solution: "watches",
-    thumbnail: "/watches/2.png",
-  },
-]
-
 const DemoPage = ({
   params
 }: {
@@ -111,14 +83,20 @@ const DemoPage = ({
     solution: string
   }
 }) => {
-  const [model, setModel] = useState(models[0].modelName)
+  const [selected, setSelected] = useState<string | null>(null)
+  const [products, setProducts] = useState<Product[] | null>(null)
+
+
 
   return (
     <main className="absolute top-0 right-0 w-full h-screen">
-      <DemoDisplay
-      model={model!}
-      solution={params.solution}
-      />
+      {
+        selected &&
+        <DemoDisplay
+        product={selected}
+        solution={params.solution}
+        />
+      }
       <div className="absolute top-0 left-0 h-full w-full">
         <div className="flex justify-between items-center p-6">
           <Link
@@ -142,12 +120,15 @@ const DemoPage = ({
           >
             <FaCamera />
           </button>
-          <ProductSelector
-          products={models}
-          selectionCallback={(id) => {
-            setModel(id as string)
-          }}
+          {
+            products &&
+            <ProductSelector
+            products={products}
+            selectionCallback={(id) => {
+              setSelected(id as string)
+            }}
           />
+          }
         </div>
       </div>
     </main>

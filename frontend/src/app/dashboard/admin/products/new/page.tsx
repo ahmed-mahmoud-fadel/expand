@@ -5,7 +5,7 @@ const NewSolutionPage = () => {
   const jwt = cookies().get('jwt')
   return (
     <main className="flex flex-col gap-4 h-full">
-      <p className="text-lg font-bold">New solution</p>
+      <p className="text-lg font-bold">New product</p>
       <SolutionForm
       jwt={jwt?.value ?? ''}
       />

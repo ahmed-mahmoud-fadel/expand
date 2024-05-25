@@ -25,7 +25,7 @@ export default async function addEntity(
   )
 
   if (!error) {
-    return {success: true}
+    return {success: true, entity: data}
   } else {
     return {success: false, message: error.message}
   }

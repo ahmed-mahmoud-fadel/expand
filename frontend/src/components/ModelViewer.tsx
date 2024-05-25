@@ -2,15 +2,21 @@
 
 import { useEffect, useRef } from 'react';
 
-const ModelViewer = () => {
+const ModelViewer = ({
+  className,
+  model,
+}: {
+  className?: string,
+  model: string,
+}) => {
   const container = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const { ModelViewerElement } = require('@google/model-viewer/dist/model-viewer')
     const viewer = new ModelViewerElement()
-    viewer.src = "/model/glasses 1.glb"
+    viewer.src = model
     viewer.cameraControls = true
-    viewer.className = "w-full h-full"
+    viewer.className = className
     container.current?.replaceChildren(viewer)
   }, [])
 

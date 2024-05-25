@@ -7,6 +7,7 @@ interface Product {
   vendor: string,
   status: string,
   link: string,
+  model: string,
 }
 
 export default Product

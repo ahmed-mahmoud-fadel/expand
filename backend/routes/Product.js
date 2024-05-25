@@ -159,16 +159,16 @@ router.post('/:id/product-model', authorize('admin'), upload.single('file'), asy
     const productID = req.params.id;
 
     if (!file) {
-        return res.status(400).send('Please upload a file.');
+        return res.status(400).json({message: 'Please upload a file.'});
     }
 
     const allowedTypes = /\.glb$/i;
-    const allowedMimeType = /^model\/gltf-binary$/i;
+    // const allowedMimeType = /^model\/gltf-binary$/i;
     const extension = allowedTypes.test(file.originalname.toLowerCase());
-    const mimeType = allowedMimeType.test(file.mimetype);
+    // const mimeType = allowedMimeType.test(file.mimetype);
 
-    if (!(extension && mimeType)) {
-        return res.status(400).send('Invalid file type. Only GLB files are allowed.');
+    if (!(extension)) {
+        return res.status(400).json({message: 'Invalid file type. Only GLB files are allowed.'});
     }
 
     const s3Params = {

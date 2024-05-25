@@ -21,7 +21,7 @@ const EditProductPage = async ({
 
   return (
     <main className="flex flex-col gap-4 h-full">
-      <p className="text-lg font-bold">Edit plan</p>
+      <p className="text-lg font-bold">Edit product</p>
       {error && <ErrorMessage message={error.message} />}
       {
         !error && product &&

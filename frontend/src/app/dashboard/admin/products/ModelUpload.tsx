@@ -6,28 +6,29 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import endpoints from "@/global/endpoints";
 import uploadImage from "@/actions/uploadImage";
+import ModelViewer from "@/components/ModelViewer";
 
-const ImageUpload = ({
-  image,
+const ModelUpload = ({
   id,
   jwt,
+  model
 }: {
-  image?: string,
   id: string,
   jwt: string,
+  model?: string,
 }) => {
   const [message, setMessage] = useState<string | null>(null)
   const formik = useFormik({
     initialValues: {
-      photo: image,
+      model: "",
     },
     onSubmit: (async (values) => {
-      if (values.photo) {
+      if (values.model) {
         const data = new FormData()
         if  (imgSelector.current?.files) {
           data.set("file", imgSelector.current?.files[0])
 
-          const response = await uploadImage(`${endpoints.products}/${id}/product-image`, data, jwt)
+          const response = await uploadImage(`${endpoints.products}/${id}/product-model`, data, jwt, true)
 
           if (!response.success) {
             setMessage(response.message)
@@ -39,43 +40,24 @@ const ImageUpload = ({
     })
   })
   const imgSelector = useRef<HTMLInputElement>(null)
-  const profileImage = useRef<HTMLImageElement>(null)
-
-  useEffect(() => {
-    if (profileImage.current) {
-      if (imgSelector.current && imgSelector.current.files && imgSelector.current.files.length > 0) {
-        const uri = URL.createObjectURL(imgSelector.current.files[0])
-        profileImage.current.src = uri
-      } else {
-        profileImage.current.src = image ?? ""
-      }
-    }
-  }, [formik.values.photo])
   
   return (
     <form
     className="flex flex-col gap-2"
     onSubmit={formik.handleSubmit}
     >
-        <p className="text-sm">Product photo</p>
+        <p className="text-sm">3D Model</p>
         {
-          formik.values.photo &&
-          <Image
-            src=""
-            alt=""
-            className="rounded-md"
-            width={150}
-            height={150}
-            ref={profileImage}
-          />
+          model &&
+          <ModelViewer model={`${endpoints.engine}/model/${id}`} className="w-[150px] h-[150px]"/>
         }
         <input
           type="file"
           ref={imgSelector}
           onChange={formik.handleChange}
-          id="photo"
-          name="photo"
-          accept="image/*"
+          id="model"
+          name="model"
+          accept=".glb"
         />
         {
           message &&
@@ -86,10 +68,10 @@ const ImageUpload = ({
         disabled={!imgSelector.current?.files || imgSelector.current.files.length <= 0}
         type="submit"
         >
-          Upload Image
+          Upload Model
         </Button>
     </form>
   );
 }
  
-export default ImageUpload;
+export default ModelUpload;
