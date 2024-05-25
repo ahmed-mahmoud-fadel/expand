@@ -2,10 +2,11 @@
 
 import Image from "next/image"
 import Link from "next/link";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FaChevronUp, FaChevronDown, FaCamera, FaArrowLeft } from "react-icons/fa";
 import icon from '@/global/img/icon.png'
 import Product from "@/types/Product";
+import endpoints from "@/global/endpoints";
 
 const DemoDisplay = ({
   solution,
@@ -18,7 +19,7 @@ const DemoDisplay = ({
     <div className="w-full h-full flex items-center justify-center">
       <iframe
       className="w-[400px] h-full"
-      src={`https://expand-vto.pages.dev/?solution=${solution}&product=${product}&width=25em`}
+      src={`${endpoints.engine}?solution=${solution}&product=${product}&width=25em`}
       allow="camera"
       />
     </div>
@@ -86,7 +87,14 @@ const DemoPage = ({
   const [selected, setSelected] = useState<string | null>(null)
   const [products, setProducts] = useState<Product[] | null>(null)
 
-
+  useEffect(() => {
+    fetch(`${endpoints.products}/active?solution=${params.solution}`)
+    .then(async response => {
+      const products = (await response.json()).products
+      setProducts(products)
+      setSelected(products[0]._id)
+    })
+  }, [])
 
   return (
     <main className="absolute top-0 right-0 w-full h-screen">
