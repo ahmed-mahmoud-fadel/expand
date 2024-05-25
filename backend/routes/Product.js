@@ -12,8 +12,14 @@ const s3 = require('../utils/aws-s3');
 router.get('/active', async (req, res) => {
     try {
         const count = await Product.countDocuments();
-        const { page = 1, limit = 6 } = req.query;
-        const products = await Product.find({ status: 'active' })
+        const { page = 1, limit = 6, category = 'all' } = req.query;
+
+        const query = { status: 'active' };
+        if (category !== 'all') {
+            query.category = category;
+        }
+        
+        const products = await Product.find(query)
         .limit(limit * 1)
         .skip((page - 1) * limit)
         .exec();
