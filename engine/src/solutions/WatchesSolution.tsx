@@ -100,8 +100,8 @@ const WatchesSolution = ({
     <div
       style={{
         position: "relative",
-        width: 'max-content',
-        height: "max-content",
+        width: "100%",
+        height: "100%",
       }}
     >
       <ARScene

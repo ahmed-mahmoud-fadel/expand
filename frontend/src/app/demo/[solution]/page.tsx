@@ -18,8 +18,8 @@ const DemoDisplay = ({
   return (
     <div className="w-full h-full flex items-center justify-center">
       <iframe
-      className="w-[400px] h-full"
-      src={`${endpoints.engine}?solution=${solution}&product=${product}&width=25em`}
+      className="w-full h-full"
+      src={`${endpoints.engine}?solution=${solution}&product=${product}`}
       allow="camera"
       />
     </div>

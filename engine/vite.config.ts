@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [react(), mkcert()],
   base: "/api/v1/engine/",
   build: {
-    outDir: "engine",
+    outDir: "../backend/engine",
+    emptyOutDir: true,
   },
 })

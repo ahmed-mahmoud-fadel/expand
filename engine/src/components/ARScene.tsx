@@ -1,7 +1,6 @@
 import { Environment } from "@react-three/drei";
 import { Canvas, ObjectMap } from "@react-three/fiber";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import Webcam from "react-webcam";
 import { BufferGeometry, Euler, Vector3 } from "three";
 import { GLTF } from "three/examples/jsm/Addons.js";
@@ -26,9 +25,7 @@ const ARScene = ({
   loopFunc: (video: HTMLVideoElement) => void,
   facingMode?: "user" | "environment"
 }) => {
-  const [searchParams] = useSearchParams()
   const [video, setVideo] = useState<HTMLVideoElement | null>(null)
-  const width = useRef(searchParams.get("width"))
   const loop = useCallback(() => {
     if (video) loopFunc(video)
   }, [video, loopFunc])
@@ -51,9 +48,10 @@ const ARScene = ({
   return (
     <div
       style={{
-        width: width.current ?? "100%",
-        height: "max-content",
+        width: "100%",
+        height: "100%",
         position: "relative",
+        objectFit: "cover",
       }}
     >
       <Webcam
@@ -62,17 +60,30 @@ const ARScene = ({
         }}
         videoConstraints={{facingMode}}
         style={{
-          width: "100%"
+          height: "100%",
+          width: "100%",
+          objectFit: "cover",
         }}
       />
       {
         video &&
+        <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width:  "100%",
+          height: "100%",
+        }}
+        >
         <Canvas
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-          }}
+        style={{
+          position: "absolute",
+          height: "100vh",
+          width: `${video.videoWidth / video.videoHeight * 100}vh`,
+          top: 0,
+          left: `-${video.videoHeight / video.videoWidth * 100}vw`,
+        }}
           orthographic
           camera={{
             left: 0,
@@ -108,13 +119,14 @@ const ARScene = ({
                   baseModelGeometry={setup.baseModelGeometry}
                   renderedModel={setup.renderedModel}
                   transformations={setup.transformations}
-                  aspect={video.clientWidth / video.clientHeight}
+                  // aspect={video.videoWidth / video.videoHeight}
                 />
               ))
             }
           </group>
           {extras}
         </Canvas>
+        </div>
       }
     </div>
   );
