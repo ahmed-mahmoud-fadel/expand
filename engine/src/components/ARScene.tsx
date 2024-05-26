@@ -71,18 +71,17 @@ const ARScene = ({
         style={{
           position: "absolute",
           top: 0,
-          left: 0,
           width:  "100%",
           height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
         >
         <Canvas
         style={{
-          position: "absolute",
           height: "100vh",
           width: `${video.videoWidth / video.videoHeight * 100}vh`,
-          top: 0,
-          left: `-${video.videoHeight / video.videoWidth * 100}vw`,
         }}
           orthographic
           camera={{
