@@ -22,12 +22,12 @@ Empower brands on their 3D journey, implementing cutting-edge 3D and AR technolo
 - **Other:** AWS S3 for asset storage, Mongodb for database
 
 ## Installation
-1. Clone the repository:
+1. **Install Node.js v20.9.0:**
+   If Node.js is not already installed on your machine, download and install it from [nodejs.org](https://nodejs.org/).
+2. Clone the repository:
    ```sh
    git clone https://github.com/ahmed-mahmoud-fadel/expand.git
 ## Usage
-1. **Install Node.js v20.9.0:**
-   If Node.js is not already installed on your machine, download and install it from [nodejs.org](https://nodejs.org/).
 ### Backend
 1. **Navigate to the Backend Directory:**
    ```sh
