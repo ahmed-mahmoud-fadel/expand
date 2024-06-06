@@ -4,23 +4,10 @@
 Empower brands on their 3D journey, implementing cutting-edge 3D and AR technologies to enhance business outcomes across the entire fashion value chain.
 
 ## Table of Contents
-1. [Demo](#demo)
-2. [Features](#features)
-3. [Technologies Used](#technologies-used)
-4. [Installation](#installation)
-5. [Usage](#usage)
-6. [Configuration](#configuration)
-7. [API Documentation](#api-documentation)
-8. [File Structure](#file-structure)
-9. [Contributing](#contributing)
-10. [Testing](#testing)
-11. [Deployment](#deployment)
-12. [License](#license)
-13. [Contact](#contact)
-
-## Demo
-![Demo GIF](link_to_demo_gif)
-[Live Demo](link_to_live_demo)
+1. [Features](#features)
+2. [Technologies Used](#technologies-used)
+3. [Installation](#installation)
+4. [Usage](#usage)
 
 ## Features
 - Real-time AR rendering of accessories.
