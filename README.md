@@ -49,7 +49,7 @@ Empower brands on their 3D journey, implementing cutting-edge 3D and AR technolo
    ```sh
    npm run dev
 6. **Access the Application:**
-   - Open your browser and go to http://localhost:3000 to view the application.
+   - Open your browser and go to http://localhost:5000 to view the application.
    
 
 
