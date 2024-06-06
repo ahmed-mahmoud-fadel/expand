@@ -38,5 +38,32 @@ Empower brands on their 3D journey, implementing cutting-edge 3D and AR technolo
 1. Clone the repository:
    ```sh
    git clone https://github.com/ahmed-mahmoud-fadel/expand.git
+## Usage
+1. **Install Node.js v20.9.0:**
+   If Node.js is not already installed on your machine, download and install it from [nodejs.org](https://nodejs.org/).
+### Backend
+1. **Navigate to the Backend Directory:**
+   ```sh
+   cd backend
+2. **Install Dependencies:**
+   ```sh
+   npm install
+3. **Start the Development Server:**
+   ```sh
+   npm start
 ### Frontend
+1. **Navigate to the Frontend Directory:**
+   ```sh
+   cd frontend
+2. **Install Dependencies:**
+   ```sh
+   npm install
+3. **Start the Development Server:**
+   ```sh
+   npm run dev
+6. **Access the Application:**
+   - Open your browser and go to http://localhost:3000 to view the application.
+   
+
+
 
