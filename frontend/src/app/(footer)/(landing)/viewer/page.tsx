@@ -13,7 +13,7 @@ const Viewer = () => {
             <Button className="text-white font-bold">Get Started</Button>
           </Link>
         </div>
-        <ModelViewer />
+        <ModelViewer model="/model/glasses 1.glb" className="w-full h-full" />
       </section>
     </main>
   );
