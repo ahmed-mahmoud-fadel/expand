@@ -7,6 +7,7 @@ import { FaChevronUp, FaChevronDown, FaCamera, FaArrowLeft } from "react-icons/f
 import icon from '@/global/img/icon.png'
 import Product from "@/types/Product";
 import endpoints from "@/global/endpoints";
+import fetchProducts from "./fetchProducts";
 
 const DemoDisplay = ({
   solution,
@@ -88,11 +89,14 @@ const DemoPage = ({
   const [products, setProducts] = useState<Product[] | null>(null)
 
   useEffect(() => {
-    fetch(`${endpoints.products}/active?solution=${params.solution}`)
-    .then(async response => {
-      const products = (await response.json()).products
-      setProducts(products)
-      setSelected(products[0]._id)
+    fetchProducts(params.solution)
+    .then((data) => {
+      if (data.success && data.products.length > 0) {
+        setProducts(data.products)
+        setSelected(data.products[0]._id)
+      } else if (!data.success) {
+        alert(data.message)
+      }
     })
   }, [])
 

@@ -16,7 +16,7 @@ router.get('/active', async (req, res) => {
 
         const query = { status: 'active' };
         if (category !== 'all') {
-            query.category = category;
+            query.category = { $regex : new RegExp(category, "i") };
         }
         
         const products = await Product.find(query)

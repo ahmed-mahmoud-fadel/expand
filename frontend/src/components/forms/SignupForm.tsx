@@ -5,9 +5,6 @@ import * as yup from 'yup'
 import { Input } from "../ui/input";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
-import { Label } from "../ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import endpoints from "@/global/endpoints";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import signup from "@/actions/signup";
@@ -29,13 +26,13 @@ const SignupForm = () => {
       confPassword: "",
     },
     validationSchema: yup.object({
-      firstName: yup.string().required().trim().label("First name"),
-      lastName: yup.string().required().trim().label("Last name"),
-      username: yup.string().required().trim().label("Username"),
-      companyName: yup.string().required().trim().label("Comapny name"),
-      email: yup.string().email().required().label("Company email"),
-      password: yup.string().required().label("Password").min(8),
-      confPassword: yup.string().required().label("Confirm password"),
+      firstName: yup.string().required().trim().label("First name").matches(/^[a-z]+$/i, "First name must only contain letters.").max(10),
+      lastName: yup.string().required().trim().label("Last name").matches(/^[a-z]+$/i, "Last name must only contain letters.").max(10),
+      username: yup.string().required().trim().label("Username").matches(/^([a-z]|_|[0-9])+$/i, "Username must only contain letters, numbers, and underscores.").max(15),
+      companyName: yup.string().required().trim().label("Comapny name").matches(/^[a-z]+$/i, "Company name must only contain letters.").max(25),
+      email: yup.string().email().required().label("Company email").max(15),
+      password: yup.string().required().label("Password").min(8).max(15),
+      confPassword: yup.string().required().label("Confirm password").max(15),
     }),
     validate: (values) => {
       if (values.password !== values.confPassword)
@@ -109,7 +106,7 @@ const SignupForm = () => {
             type="text"
           />
           {
-            formik.errors.lastName && formik.touched.companyName &&
+            formik.errors.companyName && formik.touched.companyName &&
             <p className="text-red-500 text-sm w-full">{formik.errors.companyName}</p>
           }
         </div>
@@ -180,9 +177,3 @@ const SignupForm = () => {
 }
  
 export default SignupForm;
-
-
-// TODO:
-
-// 1. COMPANY_ID
-// 2. Strong password validation
