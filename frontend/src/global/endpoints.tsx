@@ -13,6 +13,7 @@ const endpoints = {
   messages: `${handle}/contact`,
   products: `${handle}/product`,
   engine: `${handle}/engine`,
+  verify: `${handle}/user/auth/verify-email`
 }
 
 export default endpoints

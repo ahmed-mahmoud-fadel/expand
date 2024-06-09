@@ -7,7 +7,7 @@ const LandingLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
     <Header loggedIn={jwt ? true : false} />
-    <div className='mx-12 md:mx-52 mb-10'>
+    <div className='mx-12 md:mx-52 mb-10 h-full'>
       {children}
       {/* <ContactForm /> */}
     </div>

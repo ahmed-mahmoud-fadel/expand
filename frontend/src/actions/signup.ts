@@ -8,6 +8,9 @@ export default async function signup(values: any) {
     method: "post",
     headers: {
       "Content-Type": "application/json"
+    },
+    next: {
+      revalidate: 0,
     }
   })
 

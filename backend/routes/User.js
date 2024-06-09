@@ -220,7 +220,7 @@ router.post('/auth/register', async (req, res) => {
     }
 
     const verificationToken = crypto.randomBytes(32).toString('hex');
-    const verificationUrl = `${process.env.FRONT_URL}/user/auth/verify-email?token=${verificationToken}`;
+    const verificationUrl = `${process.env.FRONT_URL}/${verificationToken}`;
 
     try {
         // Check if user already exists
