@@ -27,6 +27,7 @@ function authJwt() {
             // Paths for user login and registration
             { url: `${api}/user/auth/login`, methods: ['POST'] },
             { url: `${api}/user/auth/register`, methods: ['POST'] },
+            { url: `${api}/user/auth/verify-email`, methods: ['GET'] },
             { url: `${api}/contact`, methods: ['POST'] },
             // paths for blog 
             { url: /\/api\/v1\/blog\/active(.*)/, methods: ['GET'] },

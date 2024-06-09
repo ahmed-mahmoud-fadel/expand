@@ -1,5 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 const router = express.Router();
 
 const User = require('../models/User');
@@ -169,27 +171,64 @@ router.patch('/:id/change-password', authorize('admin', 'user'), enforceAccessCo
 // User Authentication (Login)
 router.post('/auth/login', async (req,res) => {
     try {
-        const user = await User.findOne({ email: req.body.email });
-        if (user && bcrypt.compareSync(req.body.password, user.passwordHash)) {
-            const token = await generateToken(user);
-            res.status(200).json({ message: "Authentication successful", id: user.id, token: token });
-        } else {
-            res.status(400).json({ message: 'Authentication failed' });
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Email and password are required' });
         }
-    } catch(error) {
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: 'Authentication failed' });
+        }
+
+        // Check if user has verified their email
+        if (!user.isVerified) {
+            return res.status(403).json({ message: 'Please verify your email before logging in' });
+        }
+
+        // Check if the password is correct
+        const isPasswordValid = bcrypt.compareSync(password, user.passwordHash);
+        if (!isPasswordValid) {
+            return res.status(400).json({ message: 'Authentication failed' });
+        }
+
+        // Generate a token for the user
+        const token = await generateToken(user);
+        res.status(200).json({ message: 'Authentication successful', id: user.id, token });
+
+    } catch (error) {
         console.log(error);
         res.status(500).send('Internal server error');
     }
 });
 
+// Configure Nodemailer transporter
+const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: process.env.EMAIL_USER, 
+        pass: process.env.EMAIL_PASS
+    }
+});
+
 // User Registration
-router.post('/auth/register', async (req,res)=>{
+router.post('/auth/register', async (req, res) => {
     if (!validatePassword(req.body.password)) {
         return res.status(400).json({
             message: 'Password does not meet complexity requirements. It must be at least 8 characters long and include both letters and numbers.'
         });
     }
-    try{
+
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+    const verificationUrl = `${process.env.FRONT_URL}/user/auth/verify-email?token=${verificationToken}`;
+
+    try {
+        // Check if user already exists
+        const existingUser = await User.findOne({ email: req.body.email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists.' });
+        }
+
         let user = new User({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -199,22 +238,53 @@ router.post('/auth/register', async (req,res)=>{
             username: req.body.username,
             companyName: req.body.companyName,
             passwordHash: bcrypt.hashSync(req.body.password, 10),
-            
-        })
+            verificationToken: verificationToken,
+        });
+
         user = await user.save();
-        res.send({message: "Success"});
+
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: req.body.email,
+            subject: 'Email Verification',
+            html: `<p>Click <a href="${verificationUrl}">here</a> to verify your email.</p>`
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log(error);
+                return res.status(500).json({ message: 'Error sending verification email.' });
+            }
+            console.log('Verification email sent: ' + info.response);
+            res.send({ message: 'Success. Verification email sent.' });
+        });
     } catch (err) {
-        // Check if the error is related to unique constraint violation
-        if (err.code === 11000) {
-            // MongoDB duplicate key error code
-            res.status(400).json({ message:'User already exists.' });
-        } else {
-            // Handle other possible errors
-            console.error(err); // Log the error for debugging purposes
-            res.status(500).json({ message: 'An error occurred during the registration process.' });
-        }
+        console.error(err); // Log the error for debugging purposes
+        res.status(500).json({ message: 'An error occurred during the registration process.' });
     }
-})
+});
+
+// Handle the Verification Link
+router.get('/auth/verify-email', async (req, res) => {
+    const token = req.query.token;
+
+    try {
+        const user = await User.findOne({ verificationToken: token });
+
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid or expired verification token.' });
+        }
+
+        user.isVerified = true;
+        user.verificationToken = undefined;
+        await user.save();
+
+        res.send({ message: 'Email verified successfully.' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'An error occurred during email verification.' });
+    }
+});
 
 // Validate JWT Token
 router.post('/auth/validate-token', authorize('admin', 'user'), (req, res) => {
