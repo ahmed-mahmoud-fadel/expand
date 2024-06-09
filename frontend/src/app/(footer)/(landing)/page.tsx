@@ -61,7 +61,7 @@ export default function Home() {
                 {card.content}
               </CardContent>
               <CardFooter>
-                <Link href={`/models/${card.path}`}><Button variant="secondary">Try it out!</Button></Link>
+                <Link href={`/demo/${card.path}`}><Button variant="secondary">Try it out!</Button></Link>
               </CardFooter>
             </Card>
           ))
