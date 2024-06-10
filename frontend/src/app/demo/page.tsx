@@ -16,12 +16,13 @@ import { useRouter } from "next/navigation";
 
 const DemoSelectionPage = () => {
   const [navObject, setNavObject] = useState<Navigator | null>(null)
-  const isSupported = useMemo(() => {
-    if (!navObject) return null
-    return supportedOS.reduce((p, c) => {
-      return p || navObject.userAgent.match(c) !== null 
-    }, false)
-  }, [navObject])
+  // const isSupported = useMemo(() => {
+  //   if (!navObject) return null
+  //   return supportedOS.reduce((p, c) => {
+  //     return p || navObject.userAgent.match(c) !== null 
+  //   }, false)
+  // }, [navObject])
+  const isSupported = true
 
   const router = useRouter()
 
@@ -65,7 +66,7 @@ const DemoSelectionPage = () => {
           </div>
         }
         {
-          isSupported === false &&
+          isSupported &&
           <>
           <Header />
           <div className="flex justify-center p-16">

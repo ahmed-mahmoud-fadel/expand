@@ -110,7 +110,7 @@ const Products = async ({
                     <p>{product.description}</p>
                   </CardContent>
                   <CardFooter className="flex justify-evenly">
-                    <Link href="">
+                    <Link href={`/demo/${product.category}`}>
                       <Button className="text-white">
                         Try VTO
                       </Button>
