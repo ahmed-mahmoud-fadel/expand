@@ -16,7 +16,7 @@ const VerifyEmail = async ({
   })
 
   return (
-    <main className="flex items-center justify-center h-full flex-col gap-4">
+    <main className="flex items-center justify-center h-96 flex-col gap-4">
       { data && data.message }
       { error && error.message }
       <Link href='/' className="text-primary text-lg">Go Home</Link>
