@@ -1,10 +1,10 @@
-import { Environment } from "@react-three/drei";
 import { Canvas, ObjectMap } from "@react-three/fiber";
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {  Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { BufferGeometry, Euler, Vector3 } from "three";
 import { GLTF } from "three/examples/jsm/Addons.js";
 import ModelRenderer from "./ModelRenderer";
+import { Environment } from "@react-three/drei";
 
 const ARScene = ({
   setups,
@@ -113,7 +113,7 @@ const ARScene = ({
             files="warehouse.hdr"
             path={import.meta.env.BASE_URL}
             environmentRotation={new Euler(0, Math.PI / 2, 0)}
-            environmentIntensity={0.5}
+            environmentIntensity={0.2}
             />
           </Suspense>
           <ambientLight intensity={2} />
@@ -127,7 +127,7 @@ const ARScene = ({
                   baseModelGeometry={setup.baseModelGeometry}
                   renderedModel={setup.renderedModel}
                   transformations={setup.transformations}
-                  // aspect={video.videoWidth / video.videoHeight}
+                  aspect={video.videoWidth / video.videoHeight}
                 />
               ))
             }
