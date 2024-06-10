@@ -66,7 +66,7 @@ const DemoSelectionPage = () => {
           </div>
         }
         {
-          isSupported &&
+          false &&
           <>
           <Header />
           <div className="flex justify-center p-16">
