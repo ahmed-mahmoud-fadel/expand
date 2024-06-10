@@ -14,7 +14,7 @@ router.get('/active', async (req, res) => {
         const count = await Product.countDocuments();
         const { page = 1, limit = 6, category = 'all' } = req.query;
 
-        const query = { status: 'active' };
+        const query = { status: 'active', model: { $exists: true, $ne: null } };
         if (category !== 'all') {
             query.category = { $regex : new RegExp(category, "i") };
         }
