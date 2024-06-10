@@ -213,11 +213,6 @@ const transporter = nodemailer.createTransport({
 
 // User Registration
 router.post('/auth/register', async (req, res) => {
-    if (!validatePassword(req.body.password)) {
-        return res.status(400).json({
-            message: 'Password does not meet complexity requirements. It must be at least 8 characters long and include both letters and numbers.'
-        });
-    }
 
     const verificationToken = crypto.randomBytes(32).toString('hex');
     const verificationUrl = `${process.env.FRONT_URL}/${verificationToken}`;
