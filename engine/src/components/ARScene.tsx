@@ -1,6 +1,6 @@
 import { Environment } from "@react-three/drei";
 import { Canvas, ObjectMap } from "@react-three/fiber";
-import { Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { BufferGeometry, Euler, Vector3 } from "three";
 import { GLTF } from "three/examples/jsm/Addons.js";
@@ -30,6 +30,13 @@ const ARScene = ({
     if (video) loopFunc(video)
   }, [video, loopFunc])
   const loopRef = useRef(loop)
+  const [width, height, direction] = useMemo(() => {
+    if (!video) return [undefined, undefined, undefined]
+    const aspectVideo = video.videoWidth / video.videoHeight
+    const aspectClient = video.clientWidth / video.clientHeight
+    if (aspectClient > aspectVideo) return ["100vw", `${1 / aspectVideo * 100}vw`, "row"]
+    return [`${aspectVideo * 100}vh`, "100vh", "column"]
+  }, [video, document.documentElement.clientHeight, document.documentElement.clientHeight])
 
   useEffect(() => {
     loopRef.current = loop
@@ -74,15 +81,17 @@ const ARScene = ({
           width:  "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
+          flexDirection: direction as any,
           alignItems: "center",
+          justifyItems: "center",
         }}
         >
         <Canvas
-        style={{
-          height: "100vh",
-          width: `${video.videoWidth / video.videoHeight * 100}vh`,
-        }}
+        // style={{
+        //   height: "100vh",
+        //   width: `${video.videoWidth / video.videoHeight * 100}vh`,
+        // }}
+        style={{ width, height }}
           orthographic
           camera={{
             left: 0,
