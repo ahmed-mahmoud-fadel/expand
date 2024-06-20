@@ -53,4 +53,12 @@ Empower brands on their 3D journey, implementing cutting-edge 3D and AR technolo
    
 
 
+## Authors
+The Expand AR immersive virtual try-on project was developed by:
 
+- Ahmed Fadel
+- Ahmed Bashar
+- Kyrilos Emad
+- Rana Shiba
+
+We would like to express our gratitude to all the contributors who helped in various aspects of the project.
