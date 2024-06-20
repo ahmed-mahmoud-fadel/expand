@@ -45,10 +45,13 @@ Empower brands on their 3D journey, implementing cutting-edge 3D and AR technolo
 2. **Install Dependencies:**
    ```sh
    npm install
-3. **Start the Development Server:**
+3. **Build the application**
    ```sh
-   npm run dev
-6. **Access the Application:**
+   npm run build
+4. **Start the Server:**
+   ```sh
+   npm run start
+5. **Access the Application:**
    - Open your browser and go to http://localhost:5000 to view the application.
    
 
